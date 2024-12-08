@@ -1,0 +1,11 @@
+.wrap{
+    border-radius: 40px;
+    background-color: rgb(139, 195, 233);
+    height: 75px;
+    margin-top: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 15px;
+    box-sizing: border-box;
+}
