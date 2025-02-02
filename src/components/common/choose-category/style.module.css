@@ -1,0 +1,36 @@
+
+.wrap{
+    position: relative;
+    z-index: 100;
+    margin-right: 25px;
+}
+
+.categories{
+    text-align: left;
+    width: 350px;
+    background-color: rgb(255, 255, 255);
+    position: absolute;
+    top: 40px;
+}
+
+.item{
+    display: block;
+    box-sizing: border-box;
+    padding: 15px;
+    transition: 0.2s;
+    cursor: pointer;
+}
+
+.item:hover{
+    transition: 0.2s;
+    background-color: rgb(194, 194, 194);
+}
+
+.btn{
+    font-weight: 500;
+    color: #FFF;
+    background-color: rgb(80, 132, 209);
+    border-radius: 8px;
+    border: none;
+    padding: 7px;
+}

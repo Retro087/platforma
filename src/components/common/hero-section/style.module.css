@@ -1,0 +1,11 @@
+.wrap{
+    display: flex;
+    margin-bottom: 35px;
+    
+}
+.img{
+    width: 500px;
+    background-color: rgb(114, 221, 203);
+    height: 400px;
+    border-radius: 15px;
+}

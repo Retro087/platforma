@@ -1,0 +1,29 @@
+.text_block{
+
+
+    display: flex;
+}
+.text_title{
+    margin-bottom: 10px;
+    font-size: 14px;
+    color: #757575;
+
+}
+
+.text_value{
+    font-weight: 500;
+    font-size: 20px;
+    color: #333333;
+}
+
+.line{
+
+    width: 2px;
+    background-color: #757575;
+
+    margin:0  40px 55px 0;  
+}
+
+.text{
+    margin:0  40px 30px 0;
+}

@@ -1,0 +1,48 @@
+.wrap{
+
+    min-height: 500px;
+    width: 850px;
+
+    box-sizing: border-box;
+    border-radius: 10px;
+}
+
+.main{
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 35px;
+    
+}
+
+.title{
+    font-size: 32px;
+    font-weight: 500;
+    margin-bottom: 15px;
+}
+
+.short{
+    margin-bottom: 25px;
+    font-size: 17px;
+}
+
+.price{
+    font-weight: 500;
+    color: #1f1f1f;
+    font-size: 25px;
+}
+
+.category{
+    display: block;
+    color: #1f1f1f;
+    font-weight: 500;
+    font-size: 18px;
+
+}
+
+.header{
+    margin-bottom: 15px;
+    justify-content: space-between;
+    display: flex;
+    align-items: center;
+}
+

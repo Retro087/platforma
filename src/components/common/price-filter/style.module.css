@@ -1,0 +1,65 @@
+.price{
+    transition: 0.3s;
+    border-bottom: 1px solid #b4b4b4;
+    padding-bottom: 15px;
+}
+
+.min{
+    background-color: #FFF;
+
+    border: 1px solid #b4b4b4;
+    display: flex;
+    width: 125px;
+    box-sizing: border-box;
+    border-radius: 8px 0 0 8px;
+}
+
+.max{
+    background-color: #FFF;
+
+    border: 1px solid #b4b4b4;
+    border-left: none;
+    display: flex;
+    width: 125px;
+    box-sizing: border-box;
+    border-radius: 0 8px 8px 0;
+}
+
+.input{
+    all: unset;
+  width: 100%;
+}
+
+.container{
+    width: 100%;
+    display: flex;
+    padding: 9px 4px 9px 11px;
+}
+
+.text{
+    margin-right: 5px;
+}
+
+.inputs{
+    
+    display: flex;
+}
+
+.price_title{
+    display: block;
+    
+}
+
+.title{
+    margin-bottom: 15px;
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+}
+
+.arr{
+    transition: 0.3s;
+    width: 25px;
+    height: 15px;
+}
+

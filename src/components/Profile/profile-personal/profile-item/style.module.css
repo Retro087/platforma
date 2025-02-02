@@ -1,0 +1,35 @@
+.wrap{
+    padding: 16px 12px;
+    display: flex;
+    align-items: center;
+    background-color: #FFF;
+    border-radius: 8px;
+    transition: 0.2s;
+    cursor: pointer;
+}
+
+.title{
+    width: 216px;
+    font-size: 16px;
+    color: rgb(133, 133, 133);
+}
+
+.value{
+
+
+}
+
+.value_block{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.btn{
+    color: rgb(112, 157, 255);
+    margin-left: 56px;
+}
+.wrap:hover{
+    transition: 0.2s;
+    background-color: rgb(247, 247, 247);
+}

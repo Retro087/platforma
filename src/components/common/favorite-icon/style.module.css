@@ -1,0 +1,8 @@
+.wrap:hover{
+    fill: red;
+}
+
+.wrap{
+    height: 25px;
+    width: 25px;
+}

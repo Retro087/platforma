@@ -1,0 +1,8 @@
+.wrap{
+    grid-auto-rows: auto;
+
+    display: grid;
+    align-items: start;
+    justify-content: space-between;
+    row-gap: 45px;
+}

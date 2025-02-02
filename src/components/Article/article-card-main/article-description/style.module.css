@@ -1,0 +1,27 @@
+.desc{
+    background-color: #fff;
+    border-radius: 10px;
+    border: 1px solid #d3d3d3;
+    width: 100%;
+
+}
+
+.desc_header{
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    cursor: pointer;
+}
+
+.about_title{
+    font-size: 19px;
+    color: #252525;
+    font-weight: 500;
+}
+
+.desc_text{
+    padding: 20px;
+    font-size: 17px;
+
+}

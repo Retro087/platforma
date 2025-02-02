@@ -1,0 +1,23 @@
+.wrap{
+    padding: 15px;
+    border: 1px solid rgb(128, 128, 128);
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+   width: 100%;
+   margin-bottom: 25px;
+   box-sizing: border-box;
+}
+
+.item{
+display: block;
+}
+
+.item_link{
+    cursor: pointer;
+    color: #4f6fff;
+}
+
+.item_link:hover{
+    text-decoration: underline;
+}

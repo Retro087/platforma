@@ -1,0 +1,9 @@
+.wrap{
+    border-radius: 10px;
+    transition: 0.2s;
+    border: 1px solid #000;
+
+}
+.wrap:hover{
+    transition: 0.2s;
+}

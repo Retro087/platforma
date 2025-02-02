@@ -1,0 +1,21 @@
+.wrap{
+    border: 1px solid #bdbdbd;
+    background-color: #FFF;
+    padding: 25px;
+    border-radius: 8px;
+}
+
+.item{
+    font-size: 18px;
+    color: #414141;
+
+    margin-bottom: 15px;
+}
+
+.title{
+    font-weight: 500;
+    font-size: 20px;
+    color: #414141;
+    margin-bottom: 25px;
+}
+
