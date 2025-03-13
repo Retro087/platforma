@@ -1,0 +1,12 @@
+.wrap{
+    width: 300px;
+    border: 1px solid rgb(228, 228, 228);
+    border-radius: 10px;
+    height: 100%;
+    padding: 15px;
+    box-sizing: border-box;
+}
+
+.title{
+    font-size: 22px;
+}

@@ -11,6 +11,8 @@
     border: 1px solid #dbdbdb;
     box-sizing: border-box;
     border-radius: 10px;
+    flex: 1;
+
 }
 
 .input{
@@ -22,6 +24,25 @@
     border-radius: 10px 0 0 10px;
     height: 35px;
 
+}
+
+.wrap_empty{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    height: 800px;
+    background-color: #FFF;
+    border: 1px solid #dbdbdb;
+    box-sizing: border-box;
+    border-radius: 10px;
+}
+
+.empty{
+    padding: 7px;
+    border-radius: 10px;
+    
+    background-color: #dbdbdb;
 }
 
 .input_group{

@@ -1,13 +1,21 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { fetchAuthMe } from "../authSlice";
 import { fetchCategories } from "../categoriesSlice";
+import { getUnreadCount } from "../chatsSlice";
 
 export let initialize = createAsyncThunk("initial", async (_, thunkApi) => {
-  let promise = thunkApi.dispatch(fetchAuthMe());
-  let promise2 = thunkApi.dispatch(fetchCategories());
-  Promise.all([promise, promise2]).then(() => {
+  try {
+    await Promise.all([
+      thunkApi.dispatch(fetchAuthMe()),
+      thunkApi.dispatch(fetchCategories()),
+    ]);
+
     thunkApi.dispatch(succesInitialized());
-  });
+    return true;
+  } catch (error) {
+    console.error("Initialization failed:", error);
+    return thunkApi.rejectWithValue(error.message); // Важно обработать ошибку и вернуть rejectWithValue!
+  }
 });
 
 export const initSlice = createSlice({

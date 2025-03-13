@@ -7,10 +7,11 @@ import FavoriteIcon from "../../../common/favorite-icon";
 import ArticleInfoShort from "../article-info-short";
 import Button from "../../../common/Button";
 import { currencyFormat } from "../../../../utils/CurrencyFormat";
+import notPhoto from "../../../../assets/photonot.png";
 const ArticleItem = (props) => {
   const navigate = useNavigate();
   const [hide, setHide] = useState(true);
-  debugger;
+
   return (
     <div className={s.wrap}>
       {props.myId === props.item.user_id ? (
@@ -20,7 +21,10 @@ const ArticleItem = (props) => {
           </span>
           <div className={hide ? s.hide : s.menu}>
             <div
-              onClick={() => props.deleteProduct(props.item.id)}
+              onClick={() => {
+                props.deleteProduct(props.item.id);
+                setHide(true);
+              }}
               className={s.item}
             >
               Удалить
@@ -39,7 +43,10 @@ const ArticleItem = (props) => {
       <Link className={s.a} to={`/article/${props.item.id}`}>
         <div className={s.container}>
           <div className={s.img}>
-            <img src={props.item.photo} />
+            <img
+              style={!props.item.photo ? { width: 35, height: 35 } : ""}
+              src={props.item.photo || notPhoto}
+            />
           </div>
           <div className={s.text}>
             <h2 className={s.title}>{props.item.name}</h2>

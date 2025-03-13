@@ -3,7 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router";
 import Login from "./login";
 import Registration from "./registration";
-import { fetchAuth, fetchReg } from "../../store/authSlice";
+import { clearErr, fetchAuth, fetchReg } from "../../store/authSlice";
+import Error from "../common/error";
 
 const AuthContainer = () => {
   const navigate = useNavigate();
@@ -12,6 +13,7 @@ const AuthContainer = () => {
   const [reg, setReg] = useState(false);
   const select = useSelector((state) => ({
     isAuth: state.auth.isAuth,
+    err: state.auth.err,
   }));
 
   const callbacks = {
@@ -31,6 +33,12 @@ const AuthContainer = () => {
     }
   }, [select.isAuth]);
 
+  useEffect(() => {
+    if (select.err) {
+      setTimeout(() => dispatch(clearErr()), 5000);
+    }
+  }, [select.err]);
+
   return (
     <div>
       {reg ? (
@@ -38,6 +46,7 @@ const AuthContainer = () => {
       ) : (
         <Login auth={callbacks.auth} toReg={callbacks.toReg} />
       )}
+      {select.err ? <Error err={select.err} /> : ""}
     </div>
   );
 };

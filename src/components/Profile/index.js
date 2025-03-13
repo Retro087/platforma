@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation, useNavigate } from "react-router";
+import { useLocation, useNavigate, useParams } from "react-router";
 import Login from "../Auth/login";
 import Registration from "../Auth/registration";
 import { fetchAuth, fetchReg } from "../../store/authSlice";
@@ -14,28 +14,67 @@ import ModalWrap from "../common/modal";
 import { getProfile, updateProfile } from "../../store/profileSlice";
 import ProfileSidebar from "./profile-sidebar";
 import Drafts from "./drafts";
+import MyProducts from "./my-products";
+import MyRequests from "./my-requests";
+import TransactionsContainer from "./Transactions";
 
 const ProfileContainer = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
-  const [selectedPage, setSelectedPage] = useState("Персональные");
+  const params = useParams();
+
+  const [pagesList, setPageList] = useState([
+    { name: "Персональные", link: "personal" },
+    { name: "Черновики", link: "drafts" },
+    { name: "Мои товары", link: "my-products" },
+    { name: "Мои запросы на покупку", link: "purchase-requests" },
+
+    { name: "Успешные сделки", link: "transactions" },
+  ]);
 
   const select = useSelector((state) => ({
     isAuth: state.auth.isAuth,
     profile: state.profile.profile,
+    role: state.auth.role,
   }));
 
   const callbacks = {
     update: useCallback((update) => dispatch(updateProfile(update)), []),
+    setSelectedPage: (link) => {
+      navigate(`/profile/${link}`);
+    },
   };
+
   useEffect(() => {
     dispatch(getProfile());
   }, []);
-  debugger;
+
+  useEffect(() => {
+    if (select.role === "admin") {
+      setPageList([...pagesList, { name: "Админка", link: "admin" }]);
+    }
+  }, [select.role]);
+
   const renderContent = () => {
-    switch (selectedPage) {
-      case "Персональные": {
+    switch (params.page) {
+      case "drafts": {
+        return <Drafts />;
+      }
+      case "admin": {
+        navigate("/admin");
+        break;
+      }
+      case "my-products": {
+        return <MyProducts />;
+      }
+      case "purchase-requests": {
+        return <MyRequests />;
+      }
+      case "transactions": {
+        return <TransactionsContainer />;
+      }
+      default:
         return (
           <ProfilePersonal
             update={callbacks.update}
@@ -43,14 +82,8 @@ const ProfileContainer = () => {
             profile={select.profile}
           />
         );
-      }
-      case "Черновики": {
-        return <Drafts />;
-      }
     }
   };
-
-  const pagesList = ["Персональные", "Черновики"];
 
   if (!select.profile) {
     return <div>'не найдено'</div>;
@@ -60,8 +93,8 @@ const ProfileContainer = () => {
     <div>
       <ContainerLayout alignItems="start" display="flex" width={1140}>
         <ProfileSidebar
-          setSelectedPage={setSelectedPage}
-          selectedPage={selectedPage}
+          setSelectedPage={callbacks.setSelectedPage}
+          selectedPage={params.page || "personal"}
           pagesList={pagesList}
           profile={select.profile}
         />

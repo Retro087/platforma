@@ -1,0 +1,32 @@
+.wrap{
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.432);
+    display: flex;
+    justify-content: center;
+}
+
+.con{
+    margin-top: 50px;
+    border-radius: 10px;
+    padding: 15px;
+    background-color: #FFF;
+    width: 600px;
+    height: max-content;
+    max-height: 700px;
+    overflow-y: scroll;
+    scrollbar-color: #FFF;
+}
+
+.title{
+    font-size: 35px;
+    margin-bottom: 15px;
+    text-align: center;
+}
+.btns{
+    display: flex;
+    justify-content: space-between;
+}

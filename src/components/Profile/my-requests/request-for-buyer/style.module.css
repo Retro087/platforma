@@ -1,0 +1,28 @@
+.wrap{
+    position: relative;
+}
+.item{
+   padding: 5px;
+}
+
+.modal{
+    border: 1px solid #000;
+    position: absolute;
+    top: 35px;
+    right: 15px;
+    width: 200px;
+    background-color: #FFF;
+}
+
+.modalItem{
+    height: 35px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modalItem:hover{
+    background-color: rgb(140, 170, 255);
+    color: #FFF;
+}

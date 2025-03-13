@@ -1,0 +1,35 @@
+.wrap{
+    height: 50px;
+    background-color: rgb(155, 190, 255);
+    color: #FFF;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px;
+    box-sizing: border-box;
+    border-radius: 10px;
+    margin-bottom: 35px;
+}
+
+.title{
+    font-size: 34px;
+}
+
+.icon{
+    width: 35px;
+    height: 35px;
+}
+
+.profile{
+    display: flex;
+    align-items: center;
+
+}
+.photo{
+    margin-right: 15px;
+    background-color: #FFF;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+}

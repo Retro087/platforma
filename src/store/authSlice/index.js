@@ -20,6 +20,7 @@ export const authSlice = createSlice({
     load: false,
     myId: null,
     err: "",
+    role: null,
     profile: null,
   },
   reducers: {
@@ -29,14 +30,20 @@ export const authSlice = createSlice({
       state.profile = null;
       state.myId = null;
     },
+    clearErr(state) {
+      state.err = "";
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchAuth.fulfilled, (state, action) => {
+   
       if (action.payload.result === 0) {
         state.isAuth = true;
         localStorage.setItem("token", action.payload.token);
+
         state.myId = action.payload.user.id;
         state.profile = action.payload.user;
+        state.role = action.payload.user.role;
       }
 
       state.load = false;
@@ -45,7 +52,8 @@ export const authSlice = createSlice({
       state.load = true;
     });
     builder.addCase(fetchAuth.rejected, (state, err) => {
-      state.err = err;
+      state.err = err.error.message;
+    
       state.load = false;
     });
     builder.addCase(fetchReg.fulfilled, (state, action) => {
@@ -54,6 +62,7 @@ export const authSlice = createSlice({
         state.isAuth = true;
         state.myId = action.payload.user.id;
         state.profile = action.payload.user;
+        state.role = action.payload.user.role;
         localStorage.setItem("token", action.payload.token);
       }
 
@@ -71,6 +80,7 @@ export const authSlice = createSlice({
         state.myId = action.payload.user.id;
         state.isAuth = true;
         state.profile = action.payload.user;
+        state.role = action.payload.user.role;
       }
       state.load = false;
     });
@@ -78,6 +88,6 @@ export const authSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { logout } = authSlice.actions;
+export const { logout, clearErr } = authSlice.actions;
 
 export default authSlice.reducer;

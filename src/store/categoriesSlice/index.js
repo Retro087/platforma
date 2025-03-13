@@ -8,6 +8,15 @@ export const fetchCategories = createAsyncThunk(
   }
 );
 
+export const addCategory = createAsyncThunk(
+  "categories/add",
+  async (category) => {
+    return services.categoriesAPI.addCategory(category);
+  }
+);
+
+addCategory("Новая категория");
+
 export const categoriesSlice = createSlice({
   name: "categories",
   initialState: {

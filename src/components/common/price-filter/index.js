@@ -4,6 +4,7 @@ import arrow from "../arrow";
 import Arrow from "../arrow";
 const PriceFilter = (props) => {
   const [open, setOpen] = useState(false);
+
   return (
     <>
       <div style={{ padding: open ? "" : 0 }} className={s.price}>
@@ -28,7 +29,7 @@ const PriceFilter = (props) => {
               <span className={s.text}>До</span>
               <input
                 className={s.input}
-                value={props.max === Infinity ? 0 : props.max}
+                value={props.max == Infinity ? 0 : props.max}
                 onChange={(e) => props.handleChangeMax(e.target.value)}
               />
             </div>

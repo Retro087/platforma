@@ -16,6 +16,7 @@ import { addFavorite, deleteFavorite } from "../../store/favoriteSlice";
 import { useLocation, useNavigate, useSearchParams } from "react-router";
 
 import useFilter from "../../hooks/useFilter";
+import { getUnreadCount } from "../../store/chatsSlice";
 const ArticlesContainer = (props) => {
   const dispatch = useDispatch();
 
@@ -25,6 +26,7 @@ const ArticlesContainer = (props) => {
     myId: state.auth.myId,
     filters: state.articles.filters,
     isAuth: state.auth.isAuth,
+    list: state.articles.list,
   }));
 
   useEffect(() => {
@@ -35,7 +37,7 @@ const ArticlesContainer = (props) => {
         ...select.filters,
       })
     );
-  }, [select.filters]);
+  }, [select.filters, select.myId]);
 
   const callbacks = {
     addFavorite: useCallback((id) => dispatch(addFavorite(id)), []),

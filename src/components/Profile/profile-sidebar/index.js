@@ -20,13 +20,14 @@ const ProfileSidebar = (props) => {
             return (
               <div
                 style={{
-                  color: props.selectedPage === i ? "rgb(63, 130, 255)" : "",
+                  color:
+                    props.selectedPage === i.link ? "rgb(63, 130, 255)" : "",
                 }}
                 className={s.listItem}
-                onClick={() => props.setSelectedPage(i)}
+                onClick={() => props.setSelectedPage(i.link)}
                 key={index}
               >
-                {i}
+                {i.name}
               </div>
             );
           })}

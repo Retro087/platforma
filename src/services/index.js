@@ -5,10 +5,67 @@ const services = {};
 let instance = axios.create({
   baseURL: "http://localhost:5000/api/",
   headers: {
-    Authorization: `Bearer ${localStorage.getItem("token")}`,
     "Content-Type": "application/json",
   },
 });
+
+instance.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      config.headers["Authorization"] = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
+services.adminAPI = {
+  getAllUsers() {
+    return instance.get(`admin/users`).then((response) => response.data);
+  },
+  updateUser(update, id) {
+    return instance
+      .patch(`admin/users/${id}`, { ...update })
+      .then((response) => response.data);
+  },
+  deleteUser(id) {
+    return instance
+      .delete(`admin/users/${id}`)
+      .then((response) => response.data);
+  },
+  createUser(data) {
+    return instance
+      .post(`admin/users/`, { ...data })
+      .then((response) => response.data);
+  },
+  getProducts() {
+    return instance.get(`admin/products`).then((res) => res.data);
+  },
+};
+services.transactionsAPI = {
+  getBuyer() {
+    return instance.get(`transactions/buyer`).then((response) => response.data);
+  },
+  getSeller() {
+    return instance
+      .get(`transactions/seller`)
+      .then((response) => response.data);
+  },
+};
+
+services.notificationsAPI = {
+  getNotifications() {
+    return instance.get(`notifications/`).then((response) => response.data);
+  },
+  readNotification(id) {
+    return instance
+      .put(`notifications/${id}/read`)
+      .then((response) => response.data);
+  },
+};
 
 export const usersAPI = {
   getUsers(currentPage = 1, pageSize = 4, onlyFriends, name) {
@@ -41,6 +98,60 @@ services.profileAPI = {
   },
 };
 
+services.purchaseRequestsAPI = {
+  createRequest(businessId, amount) {
+    return instance
+      .post(`purchase-requests/`, { businessId, amount })
+      .then((response) => response.data);
+  },
+  getRequests(type) {
+    return instance
+      .get(`purchase-requests?type=${type}`)
+      .then((response) => response.data);
+  },
+  getRequest(productId) {
+    return instance
+      .get(`purchase-requests/${productId}`)
+      .then((response) => response.data);
+  },
+  acceptRequest(requestId) {
+    return instance
+      .put(`purchase-requests/${requestId}/accept`)
+      .then((response) => response.data);
+  },
+  rejectRequest(requestId) {
+    return instance
+      .put(`purchase-requests/${requestId}/reject`)
+      .then((response) => response.data);
+  },
+  createTransfer(purchaseRequestId, description) {
+    return instance
+      .post(`asset-transfers/`, {
+        purchaseRequestId,
+        description,
+      })
+      .then((response) => response.data);
+  },
+  confirmForBuyer(transferId) {
+    return instance
+      .put(`asset-transfers/${transferId}/confirm-buyer`)
+      .then((response) => response.data);
+  },
+  confirmForSeller(transferId) {
+    return instance
+      .put(`asset-transfers/${transferId}/confirm-seller`)
+      .then((response) => response.data);
+  },
+};
+
+services.statsAPI = {
+  getStats(id) {
+    return instance
+      .get(`products/stats/${id}`)
+      .then((response) => response.data);
+  },
+};
+
 services.authAPI = {
   authMe() {
     return instance.get(`auth/authMe`).then((response) => response.data);
@@ -68,6 +179,9 @@ services.articlesAPI = {
       )
       .then((response) => response.data);
   },
+  getMyArticles() {
+    return instance.get(`products/my`).then((response) => response.data);
+  },
   getArticle(itemId, userId) {
     return instance
       .get(`products/${itemId}?userId=${userId}`)
@@ -88,6 +202,9 @@ services.articlesAPI = {
   },
   deleteArticle(id) {
     return instance.delete(`products/${id}`).then((res) => res.data);
+  },
+  addView(id) {
+    return instance.post(`products/${id}/view`).then((res) => res.data);
   },
 };
 
@@ -110,6 +227,30 @@ services.favoriteAPI = {
 services.categoriesAPI = {
   getCategories() {
     return instance.get(`categories/`).then((response) => response.data);
+  },
+  addCategory(category) {
+    return instance
+      .post(`categories/`, { category })
+      .then((response) => response.data);
+  },
+};
+
+services.chatsAPI = {
+  getChats() {
+    return instance.get(`chats/`).then((response) => response.data);
+  },
+  createChat(user1, user2) {
+    return instance
+      .post(`chats/`, { user1, user2 })
+      .then((response) => response.data);
+  },
+  getMessages(id) {
+    return instance.get(`chats/${id}`).then((res) => res.data);
+  },
+  getUnread() {
+    return instance.get(`chats/unreadCount`).then((res) => {
+      return res.data;
+    });
   },
 };
 

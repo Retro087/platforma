@@ -48,3 +48,8 @@ margin-bottom: 35px;
 .btn{
 
 }
+
+.forAuthor span{
+    display: block;
+    margin-bottom: 15px;
+}

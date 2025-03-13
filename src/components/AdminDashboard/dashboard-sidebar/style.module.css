@@ -1,0 +1,12 @@
+.wrap{
+    width: 300px;
+    padding: 15px;
+    box-sizing: border-box;
+}
+
+.item{
+    padding: 15px;
+   
+    border-radius: 0 8px 8px 0;
+
+}

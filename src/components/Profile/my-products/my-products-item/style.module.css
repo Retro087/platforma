@@ -1,0 +1,176 @@
+.wrap{
+    align-items: start;
+    padding: 15px;
+    padding-left: 35px;
+    box-sizing: border-box;
+    display: flex;
+    width: 100%;
+    min-height: 250px;
+    background-color: #FFF;
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: rgba(0, 0, 0, 0.04) 0px 2px 4px 0px;
+    transition: box-shadow 0.4s ease-in-out;
+    border: 1px solid #cacaca;
+    margin-bottom: 25px;
+    justify-content: space-between;
+    position: relative;
+}
+.wrap:hover{
+    box-shadow: rgba(0, 0, 0, 0.08) 0px 8px 16px 0px;
+}
+.img{
+    margin-right: 25px;
+    border-radius: 5px;
+    width: 250px;
+    height:160px;
+    border: 1px solid #cacaca;;
+}
+
+.img img{
+    border-radius: 5px;
+    width: 100%;
+    height: 100%;
+}
+
+.text{
+min-width: 350px;
+max-width: 600px;
+    box-sizing: border-box;
+}
+
+.price{
+    overflow: hidden;
+
+    text-decoration: none;
+    font-weight: 500;
+    color: rgb(28, 107, 61);
+    font-size: 25px;
+    margin: 0;
+    margin-bottom: 15px;
+}
+
+.title{
+
+    overflow: hidden;
+    text-decoration: none;
+    font-weight: 500;
+    color: rgb(30, 90, 253);
+    font-size: 22px;
+    margin: 0;
+    margin-bottom: 15px;
+}
+
+.short{
+    font-size: 18px;
+    color: #272727;
+    margin-bottom: 25px;
+}
+
+a{
+    text-decoration: none;
+}
+
+.favourite{
+    border: 1px solid #272727;
+    transition: 0.2s;
+    cursor: pointer;
+    right: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background-color: #FFF;
+    width: 50px;
+    height: 50px;
+
+}
+
+
+
+.favourite img{
+    
+    height: 25px;
+    width: 25px;
+}
+
+.container{
+    align-items: start;
+    display: flex;
+}
+
+.a{
+    height: 100%;
+}
+
+.priceCon{
+
+    flex-direction: column;
+    display: flex;
+    align-items: end;
+    margin-left: 25px;
+    
+}
+
+.asking{
+    display: block;
+    font-size: 14px;
+    color: #474747;
+    margin-bottom: 25px;
+}
+
+.hide{
+    display: none;
+}
+.menu{
+    display: block;
+    width: 200px;
+    border: 1px solid black;
+    background-color: #FFF;
+}
+
+.for_sellers{
+    position: absolute;
+    left: 10px;
+    top: 10px
+
+}
+
+.breads{
+    cursor: pointer;
+}
+
+.item{
+    display: flex;
+    align-items: center;
+    height: 40px;
+    padding: 15px;
+    box-sizing: border-box;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.item:hover{
+    transition: 0.2s;
+    background-color: #8bb9ff;
+    color: #FFF;
+}
+
+.stat{
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+}
+
+.views{
+    display: block;
+    font-size: 12px;
+    color: #272727;
+    margin-bottom: 5px;
+}
+
+.favorites{
+    display: block;
+    font-size: 12px;
+    color: #272727;
+}

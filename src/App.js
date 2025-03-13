@@ -3,7 +3,7 @@ import "./App.css";
 
 import { Route, Routes } from "react-router";
 
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 
 import AuthContainer from "./components/Auth";
 import { initialize } from "./store/initializeSlice";
@@ -20,6 +20,10 @@ import Profile from "./app/Profile";
 import Sell from "./app/Sell";
 import EditProductContainer from "./components/EditProduct";
 import EditProduct from "./app/EditProduct";
+import Stats from "./app/Stats";
+import PrivateRoute from "./components/hoc/privateRoute";
+import AdminDashboardContainer from "./components/AdminDashboard";
+import Payment from "./components/Payment";
 
 function App() {
   const dispatch = useDispatch();
@@ -38,6 +42,15 @@ function App() {
   return (
     <div className="App">
       <Routes>
+        <Route
+          path="/admin/:page?"
+          element={
+            <PrivateRoute requiredRole={"admin"}>
+              <AdminDashboardContainer />
+            </PrivateRoute>
+          }
+        />
+
         {select.categories.map((i, index) => {
           return (
             <Route
@@ -51,7 +64,7 @@ function App() {
         <Route path="/article/:id" element={<Article />} />
         <Route path="/auth" element={<AuthContainer />} />
         <Route
-          path="/profile"
+          path="/profile/:page?"
           element={
             <WithAuth>
               <Profile />
@@ -67,7 +80,7 @@ function App() {
           }
         />
         <Route
-          path="/chat/:id"
+          path="/chats/:id?"
           element={
             <WithAuth>
               <Chat />
@@ -88,6 +101,22 @@ function App() {
           element={
             <WithAuth>
               <EditProduct />
+            </WithAuth>
+          }
+        />
+        <Route
+          path="stats/:id"
+          element={
+            <WithAuth>
+              <Stats />
+            </WithAuth>
+          }
+        />
+        <Route
+          path="/payment"
+          element={
+            <WithAuth>
+              <Payment />
             </WithAuth>
           }
         />

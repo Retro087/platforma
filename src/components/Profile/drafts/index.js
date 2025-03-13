@@ -18,9 +18,13 @@ const Drafts = () => {
   return (
     <div style={{ flexGrow: 1 }}>
       <BlockTitle title={"Черновики"} />
-      {select.drafts.map((i, ind) => {
-        return <DraftItem key={ind} item={i} />;
-      })}
+      {select.drafts.length ? (
+        select.drafts.map((i, ind) => {
+          return <DraftItem key={ind} item={i} />;
+        })
+      ) : (
+        <div>Пусто</div>
+      )}
     </div>
   );
 };

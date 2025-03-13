@@ -9,66 +9,122 @@ import BlockTitle from "../../common/block-title";
 const TellAbout = (props) => {
   const dispatch = useDispatch();
   const params = useParams();
+  let [data, setData] = useState({
+    name: "",
+    description: "",
+    short: "",
+    price: "",
+    category: "",
+    city: "",
+    age: "",
+  });
 
-  let [name, setName] = useState("");
-  let [description, setDescription] = useState("");
-  let [short, setShort] = useState("");
-  let [price, setPrice] = useState("");
-  let [category, setCategory] = useState("");
-  let [city, setCity] = useState("");
-  let [age, setAge] = useState("");
   useEffect(() => {
     if (props.article.id) {
-      debugger;
-      setName(props.article.name);
-      setDescription(props.article.description);
-      setShort(props.article.short);
-      setPrice(props.article.price);
       if (props.article.category) {
-        setCategory(props.article.category);
+        setData({
+          ...data,
+          name: props.article.name,
+          description: props.article.description,
+          short: props.article.short,
+          price: props.article.price,
+          age: props.article.age,
+          city: props.article.city,
+          category: props.article.category,
+        });
       } else {
-        setCategory(props.categories[0].Category);
+        setData({
+          ...data,
+          name: props.article.name,
+          description: props.article.description,
+          short: props.article.short,
+          price: props.article.price,
+          age: props.article.age,
+          city: props.article.city,
+          category: props.categories[0].Category,
+        });
       }
-      setAge(props.article.age);
-      setCity(props.article.city);
     }
   }, [props.article]);
-  debugger;
   return (
     <div>
       <Input
-        onChange={(e) => setName(e.target.value)}
-        value={name}
+        name={"name"}
+        onChange={(e) => setData({ ...data, [e.target.name]: e.target.value })}
+        value={data.name}
         label={"Название"}
+        onBlur={(e) => {
+          if (e.target.value) {
+            props.updateProduct(data, "draft");
+          }
+        }}
       />
       <Input
-        onChange={(e) => setDescription(e.target.value)}
-        value={description}
+        name={"description"}
+        onChange={(e) => setData({ ...data, [e.target.name]: e.target.value })}
+        value={data.description}
         label={"Описание"}
+        onBlur={(e) => {
+          if (e.target.value) {
+            props.updateProduct(data, "draft");
+          }
+        }}
       />
       <Input
-        onChange={(e) => setShort(e.target.value)}
-        value={short}
+        name={"short"}
+        onChange={(e) => setData({ ...data, [e.target.name]: e.target.value })}
+        value={data.short}
         label={"Короткое описание"}
+        onBlur={(e) => {
+          if (e.target.value) {
+            props.updateProduct(data, "draft");
+          }
+        }}
       />
       <Input
-        onChange={(e) => setCity(e.target.value)}
-        value={city || ""}
+        name={"city"}
+        onChange={(e) => setData({ ...data, [e.target.name]: e.target.value })}
+        value={data.city || ""}
         label={"Город"}
+        onBlur={(e) => {
+          if (e.target.value) {
+            props.updateProduct(data, "draft");
+          }
+        }}
       />
       <Input
-        onChange={(e) => setAge(e.target.value)}
-        value={age || ""}
+        name={"age"}
+        onChange={(e) => setData({ ...data, [e.target.name]: e.target.value })}
+        value={data.age || ""}
         label={"Сколько лет вашему бизнесу"}
+        onBlur={(e) => {
+          if (e.target.value) {
+            props.updateProduct(data, "draft");
+          }
+        }}
       />
       <Input
-        onChange={(e) => setPrice(e.target.value)}
-        value={price}
+        name={"price"}
+        onChange={(e) => setData({ ...data, [e.target.name]: e.target.value })}
+        value={data.price}
         label={"Цена"}
+        onBlur={(e) => {
+          if (e.target.value) {
+            props.updateProduct(data, "draft");
+          }
+        }}
       />
       <select
-        onChange={(e) => setCategory(e.target.value)}
-        value={category}
+        onChange={(e) => {
+          setData({ ...data, [e.target.name]: e.target.value });
+        }}
+        name={"category"}
+        onBlur={(e) => {
+          if (e.target.value) {
+            props.updateProduct(data, "draft");
+          }
+        }}
+        value={data.category}
         label={"Категория"}
       >
         {props.categories.map((i, index) => {
@@ -81,11 +137,7 @@ const TellAbout = (props) => {
       </select>
       <Button
         onClick={() => {
-          props.updateProduct({
-            id: params.id,
-            data: { name, description, short, price, category, age, city },
-            status: "draft",
-          });
+          props.updateProduct(data, "draft");
           props.nextStep();
         }}
         value={"Далее"}

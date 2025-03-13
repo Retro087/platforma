@@ -54,7 +54,7 @@ const CategoryArticlesContainer = (props) => {
   return (
     <>
       <BlockTitle title={props.category ? props.category : "Все товары"} />
-      <GridLayout columns={2}>
+      <div style={{ display: "flex" }}>
         <ArticleFilters
           min={filters.min}
           max={filters.max}
@@ -69,7 +69,7 @@ const CategoryArticlesContainer = (props) => {
           columns={4}
           articles={select.articles}
         />
-      </GridLayout>
+      </div>
     </>
   );
 };

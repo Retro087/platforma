@@ -1,23 +1,33 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import io from "socket.io-client";
+import services from "../../services";
 
-export const getChats = createAsyncThunk("chats/fetch", async (id) => {
-  const response = await fetch(`http://localhost:5000/api/chats/${id}`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      authorization: `Bearer ${localStorage.getItem("token")}`,
-    },
-  });
+export const getChats = createAsyncThunk("chats/get", async () => {
+  return services.chatsAPI.getChats();
+});
 
-  const data = await response.json();
-  return data;
+export const createChat = createAsyncThunk(
+  "chats/create",
+  async ({ user1, user2 }) => {
+    return services.chatsAPI.createChat(user1, user2);
+  }
+);
+
+export const getMessages = createAsyncThunk("chats/getMes", async (id) => {
+  return services.chatsAPI.getMessages(id);
+});
+
+export const getUnreadCount = createAsyncThunk("chats/getUnread", async () => {
+  return services.chatsAPI.getUnread();
 });
 
 export const chatsSlice = createSlice({
   name: "chat",
   initialState: {
-    list: [],
+    chats: [],
+    messages: [],
+    unreadCount: null,
+    selectedChat: null,
     load: false,
     err: "",
   },
@@ -25,23 +35,58 @@ export const chatsSlice = createSlice({
     addChat(state, action) {
       state.list.push(action.payload);
     },
+    setSelectedChat(state, chat) {
+      state.selectedChat = chat;
+    },
+    addMessage(state, action) {
+      state.messages.push(action.payload);
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(getChats.fulfilled, (state, action) => {
       debugger;
-      state.list = action.payload;
+      state.chats = action.payload;
       state.load = false;
     });
     builder.addCase(getChats.pending, (state) => {
       state.load = true;
     });
     builder.addCase(getChats.rejected, (state, err) => {
+      debugger;
       state.err = err;
+    });
+    builder.addCase(createChat.fulfilled, (state, action) => {
+      state.chats.push(action.payload.chat);
+      state.selectedChat = action.payload.chat.id;
+      state.load = false;
+    });
+    builder.addCase(createChat.rejected, (state, err) => {
+      state.err = err;
+    });
+    builder.addCase(getMessages.fulfilled, (state, action) => {
+      debugger;
+      state.messages = action.payload;
+      state.load = false;
+    });
+    builder.addCase(getMessages.pending, (state) => {
+      state.load = true;
+    });
+    builder.addCase(getMessages.rejected, (state, err) => {});
+    builder.addCase(getUnreadCount.fulfilled, (state, action) => {
+      debugger;
+      state.unreadCount = action.payload;
+      state.load = false;
+    });
+    builder.addCase(getUnreadCount.pending, (state) => {
+      state.load = true;
+    });
+    builder.addCase(getUnreadCount.rejected, (state, err) => {
+      debugger;
     });
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { addChat } = chatsSlice.actions;
+export const { addChat, setSelectedChat, addMessage } = chatsSlice.actions;
 
 export default chatsSlice.reducer;

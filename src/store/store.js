@@ -8,6 +8,11 @@ import initSlice from "./initializeSlice";
 import favoriteSlice from "./favoriteSlice";
 import chatSlice from "./chatSlice";
 import chatsSlice from "./chatsSlice";
+import statsSlice from "./statsSlice";
+import adminSlice from "./adminSlice";
+import purchaseRequestsSlice from "./purchaseRequests";
+import transactionsSlice from "./transactionSlice";
+import notificationsSlice from "./notificationsSlice";
 
 export default configureStore({
   reducer: {
@@ -20,5 +25,10 @@ export default configureStore({
     favorite: favoriteSlice,
     chat: chatSlice,
     chats: chatsSlice,
+    stats: statsSlice,
+    admin: adminSlice,
+    purchase: purchaseRequestsSlice,
+    transactions: transactionsSlice,
+    notifications: notificationsSlice,
   },
 });

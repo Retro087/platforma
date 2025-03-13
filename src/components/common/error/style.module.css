@@ -1,0 +1,11 @@
+.wrap{
+    width: max-content;
+    background-color: rgb(184, 59, 59);
+    color: #FFF;
+    border-radius: 10px;
+    margin: 0 auto;
+    padding: 15px;
+    position: absolute;
+    top: 25px;
+    left: 40%;
+}

@@ -19,6 +19,10 @@ export const getDrafts = createAsyncThunk("articles/drafts", async (userId) => {
   return services.articlesAPI.getDrafts(userId);
 });
 
+export const getMyProducts = createAsyncThunk("articles/my", async (userId) => {
+  return services.articlesAPI.getMyArticles();
+});
+
 export const createProduct = createAsyncThunk(
   "articles/create",
   async (url) => {
@@ -35,6 +39,10 @@ export const updateProduct = createAsyncThunk(
 
 export const deleteProduct = createAsyncThunk("articles/delete", async (id) => {
   return services.articlesAPI.deleteArticle(id);
+});
+
+export const addView = createAsyncThunk("articles/addView", async (id) => {
+  return services.articlesAPI.addView(id);
 });
 
 export const articlesSlice = createSlice({
@@ -65,6 +73,11 @@ export const articlesSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(fetchArticles.fulfilled, (state, action) => {
       state.list = action.payload;
+      state.step = 1;
+      state.load = false;
+    });
+    builder.addCase(createProduct.fulfilled, (state, action) => {
+      state.list.push(action.payload);
       state.load = false;
     });
     builder.addCase(updateProduct.fulfilled, (state, action) => {
@@ -119,6 +132,9 @@ export const articlesSlice = createSlice({
       });
 
       state.load = false;
+    });
+    builder.addCase(addView.fulfilled, (state, action) => {
+      debugger;
     });
   },
 });

@@ -1,26 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import io from "socket.io-client";
+import { getMessages } from "../chatsSlice";
 
 const socket = io("http://localhost:5000");
-
-export const getMessages = createAsyncThunk(
-  "messages/fetch",
-  async ({ id, myId }) => {
-    const response = await fetch(
-      `http://localhost:5000/api/chat/${id}?senderId=${myId}`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      }
-    );
-
-    const data = await response.json();
-    return data;
-  }
-);
 
 export const chatSlice = createSlice({
   name: "chat",

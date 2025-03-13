@@ -5,6 +5,8 @@ import logo from "../../../../assets/logo.png";
 import ContainerLayout from "../../../../layouts/container-layout";
 import loopa from "../../../../assets/search.png";
 import icon from "../../../../assets/icon.png";
+import chat from "../../../../assets/chat.png";
+import notification from "../../../../assets/notifications.png";
 
 import { Link } from "react-router";
 import FavoriteIcon from "../../../common/favorite-icon";
@@ -14,6 +16,7 @@ const Header = (props) => {
   const [input, setInput] = useState("");
   const [focus, setFocus] = useState(false);
   const [hide, setHide] = useState(true);
+  const [openNotifications, setOpenNotifications] = useState(false);
   return (
     <div className={s.wrap}>
       <ContainerLayout display={"flex"} width={1140}>
@@ -47,6 +50,39 @@ const Header = (props) => {
                 <Link to="/favorite">
                   <FavoriteIcon />
                 </Link>
+              </div>
+              <div className={s.fav_block}>
+                <Link to="/chats">
+                  <img className={s.chat} src={chat} />
+                  {props.unread ? (
+                    <span className={s.unread}>{props.unread}</span>
+                  ) : (
+                    ""
+                  )}
+                </Link>
+              </div>
+              <div className={s.fav_block}>
+                <img
+                  onClick={() => setOpenNotifications(!openNotifications)}
+                  className={s.chat}
+                  src={notification}
+                />
+                {openNotifications ? (
+                  <div className={s.notifications}>
+                    {props.notifications.map((i) => {
+                      return (
+                        <div
+                          style={{ backgroundColor: i.isRead ? "" : "#bbd3ff" }}
+                          className={s.notification}
+                        >
+                          {i.message + i.createdAt}
+                        </div>
+                      );
+                    })}
+                  </div>
+                ) : (
+                  ""
+                )}
               </div>
               <Button
                 onClick={() => props.toSell()}

@@ -1,0 +1,25 @@
+.wrap{
+    width: 100%;
+    border-radius: 10px;
+    background-color: rgb(255, 255, 255);
+    padding: 15px;
+    box-sizing: border-box;
+    border: 1px solid #f1f1f1;
+    margin-bottom: 15px;
+    transition: 0.2s;
+}
+.wrap:hover{
+    background-color: #f1f1f1;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.con{
+    display: flex;
+    justify-content: space-between;
+}
+
+.item{
+    flex: 1;
+    overflow: hidden;
+    margin-right: 15px;
+}

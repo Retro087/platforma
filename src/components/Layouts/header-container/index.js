@@ -12,6 +12,11 @@ import { useNavigate, useSearchParams } from "react-router";
 import { setParams } from "../../../store/articlesSlice";
 import useFilter from "../../../hooks/useFilter";
 import { logout } from "../../../store/authSlice";
+import {
+  addNotification,
+  getNotifications,
+} from "../../../store/notificationsSlice";
+import { socket } from "../../../socket/socket";
 
 const HeaderContainer = (props) => {
   const navigate = useNavigate();
@@ -23,6 +28,9 @@ const HeaderContainer = (props) => {
     isAuth: state.auth.isAuth,
     profile: state.auth.profile,
     filters: state.articles.filters,
+    unread: state.chats.unreadCount,
+    notifications: state.notifications.list,
+    myId: state.auth.myId,
   }));
 
   const [filter, setFilter] = useFilter(select.filters);
@@ -37,9 +45,30 @@ const HeaderContainer = (props) => {
     logout: useCallback(() => dispatch(logout()), []),
   };
 
+  useEffect(() => {
+    if (select.isAuth) {
+      dispatch(getNotifications());
+    }
+  }, [select.isAuth]);
+
+  useEffect(() => {
+    if (select.isAuth) {
+      const newNotificationHandler = (notification) => {
+        dispatch(addNotification(notification));
+      };
+
+      socket.on("new_notification", newNotificationHandler);
+
+      return () => {
+        socket.off("new_notification", newNotificationHandler);
+      };
+    }
+  }, [select.isAuth]);
+
   return (
     <>
       <Header
+        unread={select.unread}
         profile={select.profile}
         isAuth={select.isAuth}
         toAuth={callbacks.toAuth}
@@ -48,6 +77,7 @@ const HeaderContainer = (props) => {
         setParams={callbacks.setParams}
         logout={callbacks.logout}
         toSell={callbacks.toSell}
+        notifications={select.notifications}
       />
     </>
   );

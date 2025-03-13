@@ -23,7 +23,15 @@ const EditProductContainer = () => {
   }, []);
 
   const callbacks = {
-    updateProduct: useCallback((data) => dispatch(updateProduct(data)), []),
+    updateProduct: useCallback((data, status) => {
+      dispatch(
+        updateProduct({
+          id: params.id,
+          data,
+          status,
+        })
+      );
+    }, []),
     nextStep: useCallback(() => dispatch(nextStep()), []),
     backStep: useCallback(() => dispatch(backStep()), []),
   };
