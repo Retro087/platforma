@@ -41,6 +41,19 @@ export const chatsSlice = createSlice({
     addMessage(state, action) {
       state.messages.push(action.payload);
     },
+    readMessage(state, action) {
+      state.messages = state.messages.map((message) => {
+       
+        if (
+          Number(message.id) === Number(action.payload.messageId) &&
+          Number(message.recieverId) === Number(action.payload.userId)
+        ) {
+          //  Убедимся, что это сообщение для текущего пользователя
+          return { ...message, isRead: true };
+        }
+        return message;
+      });
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(getChats.fulfilled, (state, action) => {
@@ -87,6 +100,7 @@ export const chatsSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { addChat, setSelectedChat, addMessage } = chatsSlice.actions;
+export const { addChat, setSelectedChat, addMessage, readMessage } =
+  chatsSlice.actions;
 
 export default chatsSlice.reducer;

@@ -9,10 +9,8 @@ const StatsProductItem = ({ item, active, onClick }) => {
     >
       <div className={s.con}>
         <span className={s.item}>{item.id}</span>
-        <span className={s.item}>
-          {item.name}sefsefsefsefsefsefsefsefsfsefsefseff
-        </span>
-        <span className={s.item}>{item.short}sefsefsefsefsefsefsef</span>
+        <span className={s.item}>{item.name}</span>
+        <span className={s.item}>{item.short}</span>
         <span className={s.item}>{item.price}</span>
       </div>
     </div>

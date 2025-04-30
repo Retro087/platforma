@@ -1,5 +1,5 @@
 import moment from "moment/moment";
 
 export function DateFormat(date) {
-  return moment(date).format("D.M.YY, hh:mm");
+  return moment(date).format("DD.MM.YYYY, HH:mm");
 }

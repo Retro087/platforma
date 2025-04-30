@@ -7,6 +7,8 @@ import DashboardSidebar from "./dashboard-sidebar";
 import ContainerLayout from "../../layouts/container-layout";
 import AdminUsers from "./admin-users";
 import AdminProducts from "./admin-products";
+import AdminPayments from "./admin-payments";
+import AdminCategories from "./admin-categories";
 
 const AdminDashboardContainer = () => {
   const params = useParams();
@@ -22,7 +24,10 @@ const AdminDashboardContainer = () => {
 
       case "products":
         return <AdminProducts />;
-
+      case "payments":
+        return <AdminPayments />;
+      case "categories":
+        return <AdminCategories />;
       default:
         break;
     }
@@ -33,6 +38,7 @@ const AdminDashboardContainer = () => {
     { title: "Листинги", link: "products" },
     { title: "Покупки", link: "payments" },
     { title: "Выплаты", link: "payouts" },
+    { title: "Категории", link: "categories" },
   ];
 
   return (

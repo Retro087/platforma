@@ -57,6 +57,8 @@ const HeaderContainer = (props) => {
         dispatch(addNotification(notification));
       };
 
+      socket.emit("join_room", { id: select.myId });
+
       socket.on("new_notification", newNotificationHandler);
 
       return () => {

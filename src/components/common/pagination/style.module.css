@@ -1,0 +1,16 @@
+.list{
+    display: flex;
+    align-items: center;
+}
+
+.item{
+    padding: 8px;
+ 
+    border-radius: 8px;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.item:hover{
+    background-color: rgb(238, 238, 238);
+}

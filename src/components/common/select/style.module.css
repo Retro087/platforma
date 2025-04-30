@@ -1,0 +1,16 @@
+.wrap{
+
+}
+
+.label{
+    display: block;
+    margin-bottom: 5px;
+}
+
+.select{
+    all: unset;
+    padding: 5px 0  0 15px ;
+    border-radius: 8px;
+  
+    border: 1px solid #d3d3d3;
+}

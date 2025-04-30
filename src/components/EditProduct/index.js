@@ -7,6 +7,9 @@ import EditHeader from "./edit-header";
 import BlockTitle from "../common/block-title";
 import { backStep, nextStep, updateProduct } from "../../store/articlesSlice";
 import Financial from "./financial";
+import MonetizationType from "./monetization-type";
+import Expenses from "./financial/expenses";
+import Subscriptions from "./subscriptions";
 
 const EditProductContainer = () => {
   const dispatch = useDispatch();
@@ -50,7 +53,12 @@ const EditProductContainer = () => {
 
       case 2:
         return <Financial {...callbacks} article={select.article} />;
-
+      case 3:
+        return <MonetizationType {...callbacks} article={select.article} />;
+      case 4:
+        return <Expenses {...callbacks} />;
+      case 5:
+        return <Subscriptions />;
       default:
         break;
     }

@@ -1,13 +1,14 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getMyProducts } from "../../../store/articlesSlice";
+
 import StatsProductItem from "./stats-product-item";
 import BlockTitle from "../../common/block-title";
 import { useNavigate, useParams } from "react-router";
+import { getMyProducts } from "../../../store/profileSlice";
 
 const StatsSidebar = () => {
   const select = useSelector((state) => ({
-    myProducts: state.articles.list,
+    myProducts: state.profile.myProducts,
   }));
   const params = useParams();
   const dispatch = useDispatch();

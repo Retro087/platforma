@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import s from "./style.module.css";
-const Input = ({ label, onChange, value, onBlur, name }) => {
+const Input = ({ label, w, onChange, value, onBlur, name, type = "text" }) => {
   const [active, setActive] = useState(false);
 
   return (
@@ -12,6 +12,7 @@ const Input = ({ label, onChange, value, onBlur, name }) => {
         {label}
       </label>
       <input
+        type={type}
         name={name}
         onBlur={(e) => {
           if (onBlur) {
@@ -20,7 +21,7 @@ const Input = ({ label, onChange, value, onBlur, name }) => {
 
           setActive({ ...active, login: false });
         }}
-        style={{ borderColor: active.login ? "#8fadff" : "#dadada" }}
+        style={{ borderColor: active.login ? "#8fadff" : "#dadada", width: w }}
         onFocus={() => setActive({ ...active, login: true })}
         className={s.input}
         onChange={(e) => onChange(e)}

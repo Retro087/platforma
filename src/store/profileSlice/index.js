@@ -11,8 +11,8 @@ export const updateProfile = createAsyncThunk(
 
 export const updatePhoto = createAsyncThunk(
   "profile/updatePhoto",
-  async (photo) => {
-    return services.profileAPI.updateProfile(photo);
+  async ({ photo, id }) => {
+    return services.profileAPI.updatePhoto(photo, id);
   }
 );
 
@@ -44,7 +44,12 @@ export const profileSlice = createSlice({
         state.profile = action.payload.profile;
       }
     });
+    builder.addCase(updatePhoto.fulfilled, (state, action) => {
+      debugger;
+      state.profile.photo = action.payload.photo;
+    });
     builder.addCase(getMyProducts.fulfilled, (state, action) => {
+      debugger;
       state.myProducts = action.payload.products;
     });
   },

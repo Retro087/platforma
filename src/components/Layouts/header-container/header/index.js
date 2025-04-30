@@ -11,6 +11,9 @@ import notification from "../../../../assets/notifications.png";
 import { Link } from "react-router";
 import FavoriteIcon from "../../../common/favorite-icon";
 import Button from "../../../common/Button";
+import Notification from "../notification-item";
+import NotificationItem from "../notification-item";
+import BlockTitle from "../../../common/block-title";
 
 const Header = (props) => {
   const [input, setInput] = useState("");
@@ -68,17 +71,18 @@ const Header = (props) => {
                   src={notification}
                 />
                 {openNotifications ? (
-                  <div className={s.notifications}>
-                    {props.notifications.map((i) => {
-                      return (
-                        <div
-                          style={{ backgroundColor: i.isRead ? "" : "#bbd3ff" }}
-                          className={s.notification}
-                        >
-                          {i.message + i.createdAt}
-                        </div>
-                      );
-                    })}
+                  <div
+                    onClick={() => props.readNotifications()}
+                    className={s.notifications}
+                  >
+                    <BlockTitle fs={20} title={"Уведмоления"} />
+                    {props.notifications.length ? (
+                      props.notifications.map((i) => {
+                        return <NotificationItem notification={i} />;
+                      })
+                    ) : (
+                      <div>Уведомлений нет</div>
+                    )}
                   </div>
                 ) : (
                   ""

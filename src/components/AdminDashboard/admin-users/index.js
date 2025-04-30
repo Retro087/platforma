@@ -10,7 +10,8 @@ import {
 import AdminUsersItem from "./admin-users-item";
 import AdminUpdateModal from "./admin-update-modal";
 import ConfirmModal from "../../common/confirm-modal";
-import add from "../../../assets/add.png";
+
+import AddItem from "../../common/add-item";
 const AdminUsers = () => {
   const dispatch = useDispatch();
   const [update, setUpdate] = useState(false);
@@ -39,22 +40,7 @@ const AdminUsers = () => {
   return (
     <>
       <div className={s.wrap}>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "end",
-            marginBottom: 25,
-            paddingRight: 15,
-            cursor: "pointer",
-          }}
-        >
-          <img
-            style={{ width: 25, height: 25 }}
-            onClick={() => setCreate(true)}
-            src={add}
-          />
-        </div>
-
+        <AddItem onClick={() => setCreate(true)} />
         {select.users.length
           ? select.users.map((i) => {
               return (

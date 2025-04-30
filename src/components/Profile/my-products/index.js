@@ -1,9 +1,10 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getMyProducts } from "../../../store/articlesSlice";
+
 import BlockTitle from "../../common/block-title";
 import MyProductsItem from "./my-products-item";
 import { addCategory } from "../../../store/categoriesSlice";
+import { getMyProducts } from "../../../store/profileSlice";
 
 const MyProducts = () => {
   const dispatch = useDispatch();

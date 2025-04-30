@@ -13,6 +13,7 @@ import adminSlice from "./adminSlice";
 import purchaseRequestsSlice from "./purchaseRequests";
 import transactionsSlice from "./transactionSlice";
 import notificationsSlice from "./notificationsSlice";
+import subscriptionsSlice from "./subscriptionsSlice";
 
 export default configureStore({
   reducer: {
@@ -30,5 +31,6 @@ export default configureStore({
     purchase: purchaseRequestsSlice,
     transactions: transactionsSlice,
     notifications: notificationsSlice,
+    subs: subscriptionsSlice,
   },
 });

@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getChats } from "../../../store/chatsSlice";
 import s from "./style.module.css";
 import ChatItem from "./chat-item";
+import BlockTitle from "../../common/block-title";
 const ChatSidebar = ({ acitve }) => {
   const dispatch = useDispatch();
   const select = useSelector((state) => ({
@@ -14,7 +15,7 @@ const ChatSidebar = ({ acitve }) => {
 
   return (
     <div className={s.wrap}>
-      <h2 className={s.title}>Чаты</h2>
+      <BlockTitle title={"Чаты"} />
       {select.chats.map((i, ind) => {
         return <ChatItem active={acitve} key={ind} item={i} />;
       })}

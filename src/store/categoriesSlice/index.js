@@ -15,7 +15,19 @@ export const addCategory = createAsyncThunk(
   }
 );
 
-addCategory("Новая категория");
+export const deleteCategory = createAsyncThunk(
+  "categories/delete",
+  async (id) => {
+    return services.categoriesAPI.deleteCategory(id);
+  }
+);
+
+export const updateCategory = createAsyncThunk(
+  "categories/update",
+  async ({ id, data }) => {
+    return services.categoriesAPI.updateCategory(id, data);
+  }
+);
 
 export const categoriesSlice = createSlice({
   name: "categories",
@@ -26,6 +38,14 @@ export const categoriesSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(fetchCategories.fulfilled, (state, action) => {
       state.list = action.payload;
+    });
+    builder.addCase(addCategory.fulfilled, (state, action) => {
+      state.list.push(action.payload.newCategory);
+    });
+    builder.addCase(deleteCategory.fulfilled, (state, action) => {
+      state.list = state.list.filter((i) => {
+        return Number(i.id) !== Number(action.payload.deletedCategory);
+      });
     });
   },
 });

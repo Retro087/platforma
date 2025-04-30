@@ -4,23 +4,29 @@ import services from "../../services";
 
 export const fetchArticles = createAsyncThunk(
   "articles/fetch",
-  async ({ category = "all", userId = null, min, max, query }) => {
+  async ({
+    category = "all",
+    userId = null,
+    min,
+    max,
+    query,
+    page = 1,
+    limit = 10,
+  }) => {
     return services.articlesAPI.getArticles({
       category,
       userId,
       min,
       max,
       query,
+      page,
+      limit,
     });
   }
 );
 
 export const getDrafts = createAsyncThunk("articles/drafts", async (userId) => {
   return services.articlesAPI.getDrafts(userId);
-});
-
-export const getMyProducts = createAsyncThunk("articles/my", async (userId) => {
-  return services.articlesAPI.getMyArticles();
 });
 
 export const createProduct = createAsyncThunk(
@@ -50,7 +56,10 @@ export const articlesSlice = createSlice({
   initialState: {
     list: [],
     drafts: [],
+    totalProducts: null,
     step: 1,
+    currentPage: 1,
+    totalPages: null,
     load: false,
     filters: {
       query: "",
@@ -72,7 +81,11 @@ export const articlesSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(fetchArticles.fulfilled, (state, action) => {
-      state.list = action.payload;
+      debugger;
+      state.list = action.payload.products;
+      state.totalPages = action.payload.totalPages;
+      state.totalProducts = action.payload.totalProducts;
+      state.currentPage = action.payload.currentPage;
       state.step = 1;
       state.load = false;
     });
@@ -133,9 +146,7 @@ export const articlesSlice = createSlice({
 
       state.load = false;
     });
-    builder.addCase(addView.fulfilled, (state, action) => {
-      debugger;
-    });
+    builder.addCase(addView.fulfilled, (state, action) => {});
   },
 });
 

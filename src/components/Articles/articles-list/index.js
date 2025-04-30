@@ -3,8 +3,12 @@ import s from "./style.module.css";
 
 import ArticleItem from "./article-item";
 import ArticlesListSkeleton from "./article-list-skeleton";
+import Pagination from "../../common/pagination";
 
 const ArticlesList = ({
+  page,
+  limit,
+  totalPages,
   isAuth,
   isLoad,
   list,
@@ -36,6 +40,7 @@ const ArticlesList = ({
           />
         );
       })}
+      <Pagination limit={limit} page={page} totalPages={totalPages} />
     </div>
   );
 };

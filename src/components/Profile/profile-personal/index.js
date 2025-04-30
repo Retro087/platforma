@@ -1,16 +1,17 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import s from "./style.module.css";
 import ProfileItem from "./profile-item";
 import ModalWrap from "../../common/modal";
+import { updatePhoto } from "../../../store/profileSlice";
+import { useDispatch } from "react-redux";
 
 const ProfilePersonal = (props) => {
+  const dispatch = useDispatch();
   const [modal, setModal] = useState({
     title: "",
     value: "",
     isOpen: false,
   });
-
-  // Обработчик сохранения изменений
 
   const onClick = (title, value) => {
     setModal({ title, value, isOpen: true });

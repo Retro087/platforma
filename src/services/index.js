@@ -1,4 +1,5 @@
 import axios from "axios";
+import { refreshToken } from "../store/authSlice";
 
 const services = {};
 
@@ -7,14 +8,18 @@ let instance = axios.create({
   headers: {
     "Content-Type": "application/json",
   },
+  timeout: 10000,
 });
 
+// Interceptor для автоматического добавления токена и обновления при необходимости
 instance.interceptors.request.use(
-  (config) => {
-    const token = localStorage.getItem("token");
+  async (config) => {
+    let token = localStorage.getItem("token");
+
     if (token) {
       config.headers["Authorization"] = `Bearer ${token}`;
     }
+
     return config;
   },
   (error) => {
@@ -22,9 +27,81 @@ instance.interceptors.request.use(
   }
 );
 
+/*const refreshTokenFn = async () => {
+  const refreshToken = localStorage.getItem("refreshToken");
+  debugger;
+  if (!refreshToken) {
+    // Если refresh token отсутствует, перенаправляем на страницу входа
+
+    return Promise.reject("Refresh token отсутствует");
+  }
+
+  try {
+    const response = await services.authAPI.refreshToken(refreshToken);
+    debugger;
+    if (response.status === 200) {
+      const { accessToken, refreshToken: newRefreshToken } = response.data;
+
+      // Обновляем localStorage с новыми токенами
+      localStorage.setItem("accessToken", accessToken);
+      localStorage.setItem("refreshToken", newRefreshToken);
+
+      return { accessToken, newRefreshToken };
+    } else {
+      // Если ошибка при обновлении токена, перенаправляем на страницу входа
+
+      return Promise.reject("Ошибка при обновлении токена");
+    }
+  } catch (error) {
+    // Если ошибка при обновлении токена, перенаправляем на страницу входа
+
+    return Promise.reject(error);
+  }
+};
+
+// Response interceptor
+instance.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  async (error) => {
+    const originalRequest = error.config;
+    debugger;
+    // Если ошибка 401 и это не повторная попытка обновления токена
+    if (error.response?.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true; // Предотвращаем бесконечный цикл
+
+      try {
+        const { accessToken } = await refreshTokenFn();
+        debugger;
+        // Обновляем заголовок Authorization для повторного запроса
+        originalRequest.headers["Authorization"] = `Bearer ${accessToken}`;
+
+        // Повторяем исходный запрос с новым токеном
+        return instance(originalRequest);
+      } catch (refreshError) {
+        // Если при обновлении токена произошла ошибка, перенаправляем на страницу входа
+
+        return Promise.reject(error);
+      }
+    }
+
+    return Promise.reject(error);
+  }
+)*/
+
+services.subsriptionsAPI = {
+  getSubs() {
+    return instance.get(`subscriptions/`).then((response) => response.data);
+  },
+};
+
 services.adminAPI = {
   getAllUsers() {
     return instance.get(`admin/users`).then((response) => response.data);
+  },
+  getAllPayments() {
+    return instance.get(`admin/payments`).then((res) => res.data);
   },
   updateUser(update, id) {
     return instance
@@ -94,6 +171,15 @@ services.profileAPI = {
   updateProfile(update) {
     return instance
       .patch(`profile/`, { ...update })
+      .then((response) => response.data);
+  },
+  updatePhoto(photo, id) {
+    return instance
+      .post(`profile/${id}/photo`, photo, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
       .then((response) => response.data);
   },
 };
@@ -169,13 +255,26 @@ services.authAPI = {
   logOut() {
     return instance.delete(`auth/login`).then((response) => response.data);
   },
+  refreshToken(refreshToken) {
+    return instance
+      .post(`auth/refresh-token`, { refreshToken })
+      .then((res) => res.data);
+  },
 };
 
 services.articlesAPI = {
-  getArticles({ category = "all", userId = null, min, max, query }) {
+  getArticles({
+    category = "all",
+    userId = null,
+    min,
+    max,
+    query,
+    page,
+    limit,
+  }) {
     return instance
       .get(
-        `products?category=${category}&userId=${userId}&min=${min}&max=${max}&query=${query}`
+        `products?category=${category}&userId=${userId}&min=${min}&max=${max}&query=${query}&page=${page}&limit=${limit}`
       )
       .then((response) => response.data);
   },
@@ -231,6 +330,16 @@ services.categoriesAPI = {
   addCategory(category) {
     return instance
       .post(`categories/`, { category })
+      .then((response) => response.data);
+  },
+  deleteCategory(id) {
+    return instance
+      .delete(`categories/${id}`)
+      .then((response) => response.data);
+  },
+  updateCategory(id, data) {
+    return instance
+      .patch(`categories/`, { id, updateData: data })
       .then((response) => response.data);
   },
 };

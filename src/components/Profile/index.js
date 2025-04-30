@@ -37,6 +37,7 @@ const ProfileContainer = () => {
     isAuth: state.auth.isAuth,
     profile: state.profile.profile,
     role: state.auth.role,
+    myId: state.auth.myId,
   }));
 
   const callbacks = {
@@ -80,6 +81,7 @@ const ProfileContainer = () => {
             update={callbacks.update}
             title={"Персональные"}
             profile={select.profile}
+            myId={select.myId}
           />
         );
     }
@@ -93,6 +95,7 @@ const ProfileContainer = () => {
     <div>
       <ContainerLayout alignItems="start" display="flex" width={1140}>
         <ProfileSidebar
+          myId={select.myId}
           setSelectedPage={callbacks.setSelectedPage}
           selectedPage={params.page || "personal"}
           pagesList={pagesList}

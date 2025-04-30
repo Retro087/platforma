@@ -5,7 +5,13 @@ const Registration = (props) => {
   const [data, setData] = useState({ login: "", password: "", name: "" });
 
   return (
-    <div className={s.wrap}>
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        props.reg(data);
+      }}
+      className={s.wrap}
+    >
       <div className={s.container}>
         <div className={s.left}>
           <h2 className={s.left_title}>
@@ -34,7 +40,7 @@ const Registration = (props) => {
             label={"Имя"}
           />
           <div className={s.btn_block}>
-            <button onClick={() => props.reg(data)} className={s.btn}>
+            <button type="submit" className={s.btn}>
               Зарегистрироваться
             </button>
           </div>
@@ -43,7 +49,7 @@ const Registration = (props) => {
           </div>
         </div>
       </div>
-    </div>
+    </form>
   );
 };
 

@@ -1,0 +1,21 @@
+.wrap{
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.322);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.con{
+    width: 350px;
+    background-color: #FFF;
+    padding: 15px;
+    box-sizing: border-box;
+    border-radius: 10px;
+    
+}

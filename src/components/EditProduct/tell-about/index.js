@@ -5,10 +5,12 @@ import { useDispatch } from "react-redux";
 import { updateProduct } from "../../../store/articlesSlice";
 import { useParams } from "react-router";
 import BlockTitle from "../../common/block-title";
+import Select from "../../common/select";
 
 const TellAbout = (props) => {
   const dispatch = useDispatch();
   const params = useParams();
+
   let [data, setData] = useState({
     name: "",
     description: "",
@@ -17,10 +19,13 @@ const TellAbout = (props) => {
     category: "",
     city: "",
     age: "",
+    reason_for_selling: "",
+    founded_date: null,
   });
 
   useEffect(() => {
     if (props.article.id) {
+      debugger;
       if (props.article.category) {
         setData({
           ...data,
@@ -30,6 +35,8 @@ const TellAbout = (props) => {
           price: props.article.price,
           age: props.article.age,
           city: props.article.city,
+          reason_for_selling: props.article.reason_for_selling,
+          founded_date: props.article.founded_date,
           category: props.article.category,
         });
       } else {
@@ -41,6 +48,8 @@ const TellAbout = (props) => {
           price: props.article.price,
           age: props.article.age,
           city: props.article.city,
+          reason_for_selling: props.article.reason_for_selling,
+          founded_date: props.article.founded_date,
           category: props.categories[0].Category,
         });
       }
@@ -59,6 +68,7 @@ const TellAbout = (props) => {
           }
         }}
       />
+
       <Input
         name={"description"}
         onChange={(e) => setData({ ...data, [e.target.name]: e.target.value })}
@@ -82,10 +92,24 @@ const TellAbout = (props) => {
         }}
       />
       <Input
+        w={"200px"}
+        label={"Дата основания"}
+        name="founded_date"
+        onChange={(e) => setData({ ...data, [e.target.name]: e.target.value })}
+        value={data.founded_date}
+        type="date"
+        onBlur={(e) => {
+          if (e.target.value) {
+            props.updateProduct(data, "draft");
+          }
+        }}
+      />
+
+      <Input
         name={"city"}
         onChange={(e) => setData({ ...data, [e.target.name]: e.target.value })}
         value={data.city || ""}
-        label={"Город"}
+        label={"Где расположен ваш бизнес"}
         onBlur={(e) => {
           if (e.target.value) {
             props.updateProduct(data, "draft");
@@ -93,39 +117,28 @@ const TellAbout = (props) => {
         }}
       />
       <Input
-        name={"age"}
+        name={"reason_for_selling"}
         onChange={(e) => setData({ ...data, [e.target.name]: e.target.value })}
-        value={data.age || ""}
-        label={"Сколько лет вашему бизнесу"}
+        value={data.reason_for_selling || ""}
+        label={"Причина продажи"}
         onBlur={(e) => {
           if (e.target.value) {
             props.updateProduct(data, "draft");
           }
         }}
       />
-      <Input
-        name={"price"}
-        onChange={(e) => setData({ ...data, [e.target.name]: e.target.value })}
-        value={data.price}
-        label={"Цена"}
-        onBlur={(e) => {
-          if (e.target.value) {
-            props.updateProduct(data, "draft");
-          }
-        }}
-      />
-      <select
-        onChange={(e) => {
-          setData({ ...data, [e.target.name]: e.target.value });
-        }}
+      <Select
+        label={"Категория"}
+        value={data.category}
         name={"category"}
         onBlur={(e) => {
           if (e.target.value) {
             props.updateProduct(data, "draft");
           }
         }}
-        value={data.category}
-        label={"Категория"}
+        onChange={(e) => {
+          setData({ ...data, [e.target.name]: e.target.value });
+        }}
       >
         {props.categories.map((i, index) => {
           return (
@@ -134,7 +147,8 @@ const TellAbout = (props) => {
             </option>
           );
         })}
-      </select>
+      </Select>
+
       <Button
         onClick={() => {
           props.updateProduct(data, "draft");

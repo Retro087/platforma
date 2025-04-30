@@ -9,10 +9,13 @@ export const getAllProducts = createAsyncThunk("admin/products", async () => {
   return services.adminAPI.getProducts();
 });
 
+export const getAllpayments = createAsyncThunk("admin/payments", async () => {
+  return services.adminAPI.getAllPayments();
+});
+
 export const adminUpdateUser = createAsyncThunk(
   "admin/updateUser",
   async ({ data, id }) => {
-    debugger;
     return services.adminAPI.updateUser(data, id);
   }
 );
@@ -20,7 +23,6 @@ export const adminUpdateUser = createAsyncThunk(
 export const adminDeleteUser = createAsyncThunk(
   "admin/deleteUser",
   async (id) => {
-    debugger;
     return services.adminAPI.deleteUser(id);
   }
 );
@@ -28,7 +30,6 @@ export const adminDeleteUser = createAsyncThunk(
 export const adminCreateUser = createAsyncThunk(
   "admin/CreateUser",
   async (data) => {
-    debugger;
     return services.adminAPI.createUser(data);
   }
 );
@@ -38,11 +39,15 @@ export const adminSlice = createSlice({
   initialState: {
     users: [],
     products: [],
+    payments: [],
   },
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(getAllUsers.fulfilled, (state, action) => {
       state.users = action.payload;
+    });
+    builder.addCase(getAllpayments.fulfilled, (state, action) => {
+      state.payments = action.payload;
     });
 
     builder.addCase(getAllUsers.rejected, (state, action) => {

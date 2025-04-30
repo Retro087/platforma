@@ -1,0 +1,20 @@
+.lab{
+    width: 100%;
+    align-items: baseline;
+    height: 150px;
+    margin-bottom: 25px;
+    padding: 15px;
+  
+}
+
+.text{
+    flex: 1;
+    font-size: 22px;
+    font-weight: 600;
+
+    
+}
+
+.input{
+    
+}

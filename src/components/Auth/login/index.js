@@ -6,7 +6,13 @@ const Login = (props) => {
   const [data, setData] = useState({ login: "", password: "" });
 
   return (
-    <div className={s.wrap}>
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        props.auth(data);
+      }}
+      className={s.wrap}
+    >
       <div className={s.container}>
         <div className={s.left}>
           <h2 className={s.left_title}>Войдите, чтобы иметь возможность:</h2>
@@ -27,8 +33,10 @@ const Login = (props) => {
             onChange={(e) => setData({ ...data, password: e.target.value })}
             label={"Пароль"}
           />
-          <div onClick={() => props.auth(data)} className={s.btn_block}>
-            <button className={s.btn}>Войти</button>
+          <div className={s.btn_block}>
+            <button type="submit" className={s.btn}>
+              Войти
+            </button>
           </div>
 
           <div className={s.reg} onClick={props.toReg}>
@@ -36,7 +44,7 @@ const Login = (props) => {
           </div>
         </div>
       </div>
-    </div>
+    </form>
   );
 };
 

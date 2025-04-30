@@ -1,0 +1,19 @@
+.tr{
+    width: 100%;
+   
+}
+
+.th{
+    text-align: left;
+    padding: 10px;
+    padding-bottom: 20px;
+}
+
+.td{
+    padding: 0 10px ;
+    box-sizing: border-box;
+}
+.thead{
+   
+    
+}

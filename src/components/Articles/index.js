@@ -27,6 +27,9 @@ const ArticlesContainer = (props) => {
     filters: state.articles.filters,
     isAuth: state.auth.isAuth,
     list: state.articles.list,
+    currentPage: state.articles.currentPage,
+    totalPages: state.articles.totalPages,
+    limit: state.articles.limit,
   }));
 
   useEffect(() => {
@@ -47,6 +50,9 @@ const ArticlesContainer = (props) => {
   return (
     <>
       <ArticlesList
+        limit={select.limit}
+        page={select.currentPage}
+        totalPages={select.totalPages}
         isAuth={select.isAuth}
         addFavorite={callbacks.addFavorite}
         deleteFavorite={callbacks.deleteFavorite}
