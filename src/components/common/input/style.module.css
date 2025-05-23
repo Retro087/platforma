@@ -1,20 +1,36 @@
-.input_block{
-    margin-bottom: 25px;
-    width: 100%;
+.input_block {
+  margin-bottom: 25px;
+  width: 100%;
 }
 
-.label{
-    display: block;
-    margin-bottom: 5px;
+.label {
+  text-align: start;
+  display: block;
+  margin-bottom: 5px;
+  color: #fff;
+  margin-bottom: 11px;
+  font-weight: 510;
+  font-size: 20px;
+  line-height: 100%;
+  letter-spacing: 0%;
 }
 
-.input{
-    transition: 0.2s;
-    all: unset;
-    box-sizing: border-box;
-    padding: 5px 15px;
-    height: 35px;
-    border-radius: 8px;
-    width: 100%;
-    border: 1px solid #dadada;
+.input {
+  all: unset;
+  transition: 0.2s;
+  text-align: start;
+
+  box-sizing: border-box;
+  padding: 5px 15px;
+  height: 35px;
+  border-radius: 8px;
+  width: 100%;
+  border: 1px solid #dadada;
+  height: 58px;
+
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  color: #fff;
 }

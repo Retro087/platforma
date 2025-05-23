@@ -1,9 +1,9 @@
-.wrap{
-    font-size: 32px;
-    font-weight: 600;
-    color: rgb(15, 30, 43);
-    padding-bottom: 15px;
-    border-bottom: 1px solid black;
-    text-align: start;
-    margin-bottom: 25px;
+.wrap {
+  font-size: 32px;
+  font-weight: 600;
+  color: #fff;
+  padding-bottom: 15px;
+
+  text-align: start;
+  margin-bottom: 25px;
 }

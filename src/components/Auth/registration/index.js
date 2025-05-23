@@ -69,7 +69,7 @@ const Registration = (props) => {
         </div>
         <div className={s.rigth}>
           <div className={s.logo}>StarLine</div>
-          <h1 className={s.title}>Создай свой аккант</h1>
+          <h1 className={s.title}>Создай свой аккаунт</h1>
           {getInputByStep()}
 
           <div className={s.btn_block}>

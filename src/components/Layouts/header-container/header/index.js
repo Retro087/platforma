@@ -24,9 +24,7 @@ const Header = (props) => {
     <div className={s.wrap}>
       <ContainerLayout display={"flex"} width={1140}>
         <Link to={"/"}>
-          <div className={s.logo}>
-            <img src={logo} />
-          </div>
+          <div className={s.logo}>StarLine</div>
         </Link>
         <ChooseCategory list={props.categories} />
         <div className={s.search}>

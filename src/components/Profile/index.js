@@ -8,7 +8,6 @@ import HeaderContainer from "../Layouts/header-container";
 import ProfilePersonal from "./profile-personal";
 import ContainerLayout from "../../layouts/container-layout";
 import ProfileSidear from "./profile-sidebar";
-import { Modal } from "bootstrap";
 import AuthInput from "../common/input";
 import ModalWrap from "../common/modal";
 import { getProfile, updateProfile } from "../../store/profileSlice";
@@ -17,6 +16,7 @@ import Drafts from "./drafts";
 import MyProducts from "./my-products";
 import MyRequests from "./my-requests";
 import TransactionsContainer from "./Transactions";
+import ProfileMain from "./profile-main";
 
 const ProfileContainer = () => {
   const navigate = useNavigate();
@@ -93,15 +93,21 @@ const ProfileContainer = () => {
 
   return (
     <div>
-      <ContainerLayout alignItems="start" display="flex" width={1140}>
+      <ContainerLayout
+        alignItems="start"
+        justify="space-between"
+        display="flex"
+        width={1140}
+      >
+        <ProfileMain myId={select.myId} profile={select.profile} />
         <ProfileSidebar
           myId={select.myId}
           setSelectedPage={callbacks.setSelectedPage}
           selectedPage={params.page || "personal"}
           pagesList={pagesList}
           profile={select.profile}
+          {...callbacks}
         />
-        {renderContent()}
       </ContainerLayout>
     </div>
   );

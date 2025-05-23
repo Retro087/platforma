@@ -25,7 +25,7 @@ const MyProducts = () => {
           return <MyProductsItem item={i} />;
         })
       ) : (
-        <div>Пусто</div>
+        <div style={{ color: "#FFF" }}>Пусто</div>
       )}
     </div>
   );

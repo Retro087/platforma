@@ -11,7 +11,6 @@ const ProfileItem = (props) => {
         <span className={s.value}>
           {props.value ? props.value : "Не указано"}
         </span>
-        <span className={s.btn}>Изменить</span>
       </div>
     </div>
   );

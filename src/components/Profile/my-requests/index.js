@@ -14,6 +14,7 @@ import BlockTitle from "../../common/block-title";
 import RequestTable from "./request-table";
 import { useNavigate, useParams } from "react-router";
 import Button from "../../common/Button";
+import MyRequestsBlock from "./my-requests-block";
 
 const MyRequests = () => {
   const dispatch = useDispatch();
@@ -70,29 +71,7 @@ const MyRequests = () => {
   return (
     <div style={{ flex: 1 }}>
       <BlockTitle title={"Запросы на покупку"} />
-      <div>
-        <Button
-          value={"Входящие"}
-          mr="15px"
-          onClick={() => callbacks.handleSortChange("incoming")}
-        />
-        <Button
-          value={"Исходящие"}
-          mr="15px"
-          onClick={() => callbacks.handleSortChange("outgoing")}
-        />
-        <Button
-          value={"Все"}
-          mr="15px"
-          onClick={() => callbacks.handleSortChange(null)}
-        />
-      </div>
-      <RequestTable
-        myid={select.myId}
-        requests={select.requests}
-        tableHeaders={tableHeaders}
-        {...callbacks}
-      />
+      <MyRequestsBlock requests={select.requests} />
     </div>
   );
 };

@@ -7,6 +7,7 @@ import {
 import BlockTitle from "../../common/block-title";
 import Button from "../../common/Button";
 import TransactionTable from "./transaction-table";
+import TransactionsBlock from "./transactions-block";
 
 const TransactionsContainer = () => {
   const dispatch = useDispatch();
@@ -33,12 +34,7 @@ const TransactionsContainer = () => {
   return (
     <div style={{ flex: 1 }}>
       <BlockTitle title={"Успешные сделки"} />
-      <Button mr="15px" value={"Проданные"} onClick={() => setPage("seller")} />
-      <Button value={"Купленные"} onClick={() => setPage("buyer")} />
-      <TransactionTable
-        transactions={select.transactions}
-        tableHeaders={tableHeaders}
-      />
+      <TransactionsBlock transactions={select.transactions} />
     </div>
   );
 };
