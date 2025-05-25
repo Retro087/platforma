@@ -34,7 +34,11 @@ const TransactionsContainer = () => {
   return (
     <div style={{ flex: 1 }}>
       <BlockTitle title={"Успешные сделки"} />
-      <TransactionsBlock transactions={select.transactions} />
+      {select.transactions.length ? (
+        <TransactionsBlock transactions={select.transactions} />
+      ) : (
+        <div style={{ color: "#FFF" }}>Пока нет успешных сделок</div>
+      )}
     </div>
   );
 };

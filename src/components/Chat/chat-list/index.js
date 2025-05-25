@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import s from "./style.module.css";
 import Message from "./message";
+import micro from "../../../assets/mdi_microphone.png";
 const ChatList = ({ list, send, myId, active, markAsRead }) => {
   const [value, setValue] = useState("");
   const chatContainerRef = useRef(null); //  Создаем реф для контейнера чата
@@ -63,7 +64,7 @@ const ChatList = ({ list, send, myId, active, markAsRead }) => {
           onChange={(e) => setValue(e.target.value)}
         />
         <button type="submit" className={s.btn} onClick={() => sendMes()}>
-          Отправить
+          <img src={micro} />
         </button>
       </form>
     </div>

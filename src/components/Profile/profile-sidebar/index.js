@@ -5,6 +5,7 @@ import edit from "../../../assets/pencil.png";
 import { useDispatch } from "react-redux";
 import { updatePhoto } from "../../../store/profileSlice";
 import ProfilePersonal from "../profile-personal";
+import Drafts from "../drafts";
 const ProfileSidebar = (props) => {
   return (
     <div>
@@ -14,6 +15,7 @@ const ProfileSidebar = (props) => {
         profile={props.profile}
         myId={props.myId}
       />
+      <Drafts />
     </div>
   );
 };

@@ -27,68 +27,6 @@ instance.interceptors.request.use(
   }
 );
 
-/*const refreshTokenFn = async () => {
-  const refreshToken = localStorage.getItem("refreshToken");
-  debugger;
-  if (!refreshToken) {
-    // Если refresh token отсутствует, перенаправляем на страницу входа
-
-    return Promise.reject("Refresh token отсутствует");
-  }
-
-  try {
-    const response = await services.authAPI.refreshToken(refreshToken);
-    debugger;
-    if (response.status === 200) {
-      const { accessToken, refreshToken: newRefreshToken } = response.data;
-
-      // Обновляем localStorage с новыми токенами
-      localStorage.setItem("accessToken", accessToken);
-      localStorage.setItem("refreshToken", newRefreshToken);
-
-      return { accessToken, newRefreshToken };
-    } else {
-      // Если ошибка при обновлении токена, перенаправляем на страницу входа
-
-      return Promise.reject("Ошибка при обновлении токена");
-    }
-  } catch (error) {
-    // Если ошибка при обновлении токена, перенаправляем на страницу входа
-
-    return Promise.reject(error);
-  }
-};
-
-// Response interceptor
-instance.interceptors.response.use(
-  (response) => {
-    return response;
-  },
-  async (error) => {
-    const originalRequest = error.config;
-    debugger;
-    // Если ошибка 401 и это не повторная попытка обновления токена
-    if (error.response?.status === 401 && !originalRequest._retry) {
-      originalRequest._retry = true; // Предотвращаем бесконечный цикл
-
-      try {
-        const { accessToken } = await refreshTokenFn();
-        debugger;
-        // Обновляем заголовок Authorization для повторного запроса
-        originalRequest.headers["Authorization"] = `Bearer ${accessToken}`;
-
-        // Повторяем исходный запрос с новым токеном
-        return instance(originalRequest);
-      } catch (refreshError) {
-        // Если при обновлении токена произошла ошибка, перенаправляем на страницу входа
-
-        return Promise.reject(error);
-      }
-    }
-
-    return Promise.reject(error);
-  }
-)*/
 
 services.subsriptionsAPI = {
   getSubs() {

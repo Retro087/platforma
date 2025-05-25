@@ -71,7 +71,11 @@ const MyRequests = () => {
   return (
     <div style={{ flex: 1 }}>
       <BlockTitle title={"Запросы на покупку"} />
-      <MyRequestsBlock requests={select.requests} />
+      {select.requests.length ? (
+        <MyRequestsBlock requests={select.requests} />
+      ) : (
+        <div>Пока нет запросов на покупку</div>
+      )}
     </div>
   );
 };
