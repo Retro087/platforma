@@ -32,6 +32,7 @@ function App() {
     init: state.init.initialized,
   }));
   useEffect(() => {
+    debugger;
     dispatch(initialize());
   }, []);
 
