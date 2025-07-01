@@ -25,6 +25,9 @@ const AuthContainer = () => {
     toAuth: () => {
       setReg(false);
     },
+    toAuthGoogle: () => {
+      window.location = "http://localhost:5000/auth/google";
+    },
   };
 
   useEffect(() => {
@@ -42,9 +45,17 @@ const AuthContainer = () => {
   return (
     <div>
       {reg ? (
-        <Registration reg={callbacks.reg} toAuth={callbacks.toAuth} />
+        <Registration
+          toAuthGoogle={callbacks.toAuthGoogle}
+          reg={callbacks.reg}
+          toAuth={callbacks.toAuth}
+        />
       ) : (
-        <Login auth={callbacks.auth} toReg={callbacks.toReg} />
+        <Login
+          toAuthGoogle={callbacks.toAuthGoogle}
+          auth={callbacks.auth}
+          toReg={callbacks.toReg}
+        />
       )}
       {select.err ? <Error err={select.err} /> : ""}
     </div>

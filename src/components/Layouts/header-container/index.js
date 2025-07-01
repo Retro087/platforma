@@ -11,12 +11,13 @@ import { fetchCategories } from "../../../store/categoriesSlice";
 import { useNavigate, useSearchParams } from "react-router";
 import { setParams } from "../../../store/articlesSlice";
 import useFilter from "../../../hooks/useFilter";
-import { logout } from "../../../store/authSlice";
+
 import {
   addNotification,
   getNotifications,
 } from "../../../store/notificationsSlice";
 import { socket } from "../../../socket/socket";
+import { logoutFetch } from "../../../store/authSlice";
 
 const HeaderContainer = (props) => {
   const navigate = useNavigate();
@@ -42,7 +43,7 @@ const HeaderContainer = (props) => {
     setParams: useCallback((query) => {
       setFilter({ query });
     }),
-    logout: useCallback(() => dispatch(logout()), []),
+    logout: useCallback(() => dispatch(logoutFetch()), []),
   };
 
   useEffect(() => {

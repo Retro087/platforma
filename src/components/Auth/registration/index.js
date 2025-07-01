@@ -96,6 +96,7 @@ const Registration = (props) => {
                 alignItems: "center",
                 justifyContent: "center",
               }}
+              onClick={() => props.toAuthGoogle()}
               type="button"
               className={s.btn}
             >

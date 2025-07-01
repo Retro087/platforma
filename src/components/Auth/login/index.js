@@ -54,6 +54,7 @@ const Registration = (props) => {
           </div>
           <div className={s.btn_block}>
             <button
+              onClick={() => props.toAuthGoogle()}
               style={{
                 marginBottom: 10,
                 gap: 5,

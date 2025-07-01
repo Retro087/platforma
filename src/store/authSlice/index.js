@@ -14,6 +14,10 @@ export const fetchReg = createAsyncThunk("reg/fetch", async (auth) => {
   return services.authAPI.reg(auth.login, auth.password, auth.name);
 });
 
+export const logoutFetch = createAsyncThunk("logout", async (auth) => {
+  return services.authAPI.logOut();
+});
+
 export const authSlice = createSlice({
   name: "auth",
   initialState: {
@@ -25,12 +29,6 @@ export const authSlice = createSlice({
     profile: null,
   },
   reducers: {
-    logout(state) {
-      localStorage.removeItem("token");
-      state.isAuth = false;
-      state.profile = null;
-      state.myId = null;
-    },
     clearErr(state) {
       state.err = "";
     },
@@ -50,6 +48,11 @@ export const authSlice = createSlice({
     });
     builder.addCase(fetchAuth.pending, (state) => {
       state.load = true;
+    });
+    builder.addCase(logoutFetch.fulfilled, (state) => {
+      state.isAuth = false;
+      state.profile = null;
+      state.myId = null;
     });
     builder.addCase(updatePhoto.fulfilled, (state, action) => {
       state.profile.photo = action.payload.photo;
@@ -92,6 +95,6 @@ export const authSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { logout, clearErr } = authSlice.actions;
+export const { clearErr } = authSlice.actions;
 
 export default authSlice.reducer;

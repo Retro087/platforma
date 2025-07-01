@@ -10,6 +10,7 @@ let instance = axios.create({
     "Content-Type": "application/json",
   },
   timeout: 10000,
+  withCredentials: true,
 });
 
 // Interceptor для автоматического добавления токена и обновления при необходимости
@@ -24,78 +25,43 @@ instance.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
 
-    debugger;
+    // Обработка ошибки 401 (недостаточно прав / просроченный токен)
     if (error.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
-      debugger;
+
       if (!isRefreshing) {
         isRefreshing = true;
 
         try {
-          const refreshToken = localStorage.getItem("refreshToken");
-          debugger;
-          if (!refreshToken) {
-            // Example: Redirect to login page
-            return Promise.reject(error);
-          }
-          debugger;
-          const refreshResponse = await instance.post(
-            "auth/refresh-token", // Replace with your refresh token endpoint
-            { refreshToken: refreshToken }
-          );
-          debugger;
-          const { token: newToken, refreshToken: newRefreshToken } =
-            refreshResponse.data;
+          // Отправляем запрос на обновление токена.
+          // Предполагается, что сервер обновит куки, а не вернет токен в теле.
+          await instance.post("auth/refresh-token");
 
-          localStorage.setItem("token", newToken);
-          localStorage.setItem("refreshToken", newRefreshToken);
-
-          instance.defaults.headers.common[
-            "Authorization"
-          ] = `Bearer ${newToken}`; // Update default header
-          originalRequest.headers["Authorization"] = `Bearer ${newToken}`; // Update failed request header
-
-          // Retry all failed requests
-          failedRequests.forEach((cb) => cb(newToken));
+          // После обновления куки, повторяем все ожидающие запросы
+          failedRequests.forEach((cb) => cb());
           failedRequests = [];
 
-          return instance(originalRequest); // Retry the original request with the new token
+          // Повторный запрос оригинального запроса
+          return instance(originalRequest);
         } catch (refreshError) {
-          // Refresh token failed, redirect to login or handle as needed
-          localStorage.removeItem("token");
-          localStorage.removeItem("refreshToken");
-
-          // Example: Redirect to login page
+          // Ошибка при обновлении токена — например, редирект на страницу входа
+          // Можно очистить куки или сделать логику выхода
           return Promise.reject(refreshError);
         } finally {
           isRefreshing = false;
         }
       } else {
-        // If already refreshing, queue the request
-        return new Promise(function (resolve, reject) {
-          failedRequests.push((token) => {
-            originalRequest.headers["Authorization"] = `Bearer ${token}`;
+        // Если уже идет обновление токена, ждем его завершения
+        return new Promise((resolve, reject) => {
+          failedRequests.push(() => {
+            // После обновления куки, повторяем запрос
             resolve(instance(originalRequest));
           });
         });
       }
     }
 
-    return Promise.reject(error);
-  }
-);
-
-instance.interceptors.request.use(
-  async (config) => {
-    let token = localStorage.getItem("token");
-
-    if (token) {
-      config.headers["Authorization"] = `Bearer ${token}`;
-    }
-
-    return config;
-  },
-  (error) => {
+    // Для остальных ошибок возвращаем их дальше
     return Promise.reject(error);
   }
 );
@@ -263,7 +229,7 @@ services.authAPI = {
       .then((responce) => responce.data);
   },
   logOut() {
-    return instance.delete(`auth/login`).then((response) => response.data);
+    return instance.delete(`auth/logout`).then((response) => response.data);
   },
   refreshToken(refreshToken) {
     return instance
