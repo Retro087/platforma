@@ -5,7 +5,7 @@ const ContainerLayout = ({
   width,
   alignItems = "center",
   justify = "start",
-
+  h = "100%",
   display = "block",
   children,
 }) => {
@@ -13,7 +13,7 @@ const ContainerLayout = ({
     <div
       style={{
         width: `${width}px`,
-        height: "100%",
+        height: h,
         display: display,
         alignItems: alignItems,
         justifyContent: justify,

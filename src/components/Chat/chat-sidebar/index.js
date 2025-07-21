@@ -4,19 +4,13 @@ import { getChats } from "../../../store/chatsSlice";
 import s from "./style.module.css";
 import ChatItem from "./chat-item";
 import BlockTitle from "../../common/block-title";
-const ChatSidebar = ({ acitve }) => {
+const ChatSidebar = ({ acitve, chats }) => {
   const dispatch = useDispatch();
-  const select = useSelector((state) => ({
-    chats: state.chats.chats,
-  }));
-  useEffect(() => {
-    dispatch(getChats());
-  }, []);
 
   return (
     <div className={s.wrap}>
       <BlockTitle title={"Чаты"} />
-      {select.chats.map((i, ind) => {
+      {chats.map((i, ind) => {
         return <ChatItem active={acitve} key={ind} item={i} />;
       })}
     </div>

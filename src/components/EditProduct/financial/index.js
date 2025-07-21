@@ -15,6 +15,8 @@ const Financial = (props) => {
   const [isMonthly, setIsMonthly] = useState(true);
   const [data, setData] = useState({
     gross_revenue_last_12_months: 0,
+    mrr: 0,
+    last_3_month: 0,
     profit: "",
     views: "",
     subs: "",
@@ -32,6 +34,8 @@ const Financial = (props) => {
         subs: props.article.subs,
         gross_revenue_last_12_months:
           props.article.gross_revenue_last_12_months,
+        mrr: props.article.mrr,
+        last_3_month: props.article.last_3_month,
       });
     }
   }, [props.article]);
@@ -73,19 +77,47 @@ const Financial = (props) => {
       {isMonthly ? (
         <MonthlyFinancial />
       ) : (
-        <Input
-          name={"gross_revenue_last_12_months"}
-          onChange={(e) =>
-            setData({ ...data, [e.target.name]: e.target.value })
-          }
-          value={data.gross_revenue_last_12_months}
-          label={"Годовой доход за последние 12 месяцев"}
-          onBlur={(e) => {
-            if (e.target.value) {
-              props.updateProduct(data, "draft");
+        <>
+          <Input
+            name={"gross_revenue_last_12_months"}
+            onChange={(e) =>
+              setData({ ...data, [e.target.name]: e.target.value })
             }
-          }}
-        />
+            value={data.gross_revenue_last_12_months}
+            label={"Годовой доход за последние 12 месяцев"}
+            onBlur={(e) => {
+              if (e.target.value) {
+                props.updateProduct(data, "draft");
+              }
+            }}
+          />
+          <Input
+            name={"mrr"}
+            onChange={(e) =>
+              setData({ ...data, [e.target.name]: e.target.value })
+            }
+            value={data.mrr}
+            label={"Средняя ежемесячная выручка"}
+            onBlur={(e) => {
+              if (e.target.value) {
+                props.updateProduct(data, "draft");
+              }
+            }}
+          />
+          <Input
+            name={"last_3_month"}
+            onChange={(e) =>
+              setData({ ...data, [e.target.name]: e.target.value })
+            }
+            value={data.last_3_month}
+            label={"Выручка за последние три месяца"}
+            onBlur={(e) => {
+              if (e.target.value) {
+                props.updateProduct(data, "draft");
+              }
+            }}
+          />
+        </>
       )}
 
       <div style={{ display: "flex", justifyContent: "space-between" }}>

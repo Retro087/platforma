@@ -97,7 +97,7 @@ const ProfileContainer = () => {
         alignItems="start"
         justify="space-between"
         display="flex"
-        width={1140}
+        width={1440}
       >
         <ProfileMain myId={select.myId} profile={select.profile} />
         <ProfileSidebar

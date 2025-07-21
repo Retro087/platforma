@@ -12,7 +12,7 @@ const Expenses = (props) => {
   ]);
 
   function addExpense() {
-    setExpenses([...expenses, { title: "", monthAvg: 0 }]);
+    props.addExpense();
   }
 
   return (

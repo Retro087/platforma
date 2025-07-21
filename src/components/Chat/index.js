@@ -18,6 +18,7 @@ const ChatContainer = () => {
     load: state.chats.load,
     myId: state.auth.myId,
     selected: state.chats.selectedChat,
+    chats: state.chats.chats,
   }));
 
   useEffect(() => {
@@ -82,8 +83,39 @@ const ChatContainer = () => {
     });
   };
 
+  if (!select.chats.length) {
+    return (
+      <ContainerLayout h="800px" width={1140}>
+        <div
+          style={{
+            width: "100%",
+            height: "100%",
+            border: "1px solid #FFF",
+            borderRadius: 10,
+            position: "relative",
+            display: "flex",
+            justifyContent: "center",
+          }}
+        >
+          <span
+            style={{
+              color: "#000",
+              padding: 10,
+              backgroundColor: "#FFF",
+              borderRadius: 10,
+              position: "absolute",
+              top: "40%",
+            }}
+          >
+            У вас нет активных чатов
+          </span>
+        </div>
+      </ContainerLayout>
+    );
+  }
+
   return (
-    <ContainerLayout alignItems="start" display="flex" width={1140}>
+    <ContainerLayout alignItems="stretch" h="800px" display="flex" width={1140}>
       <ChatSidebar acitve={params.id} />
       <ChatList
         markAsRead={markAsRead}

@@ -8,7 +8,7 @@ import ProfilePersonal from "../profile-personal";
 import Drafts from "../drafts";
 const ProfileSidebar = (props) => {
   return (
-    <div>
+    <div style={{ display: "flex", flexDirection: "column", gap: 30 }}>
       <ProfilePersonal
         update={props.update}
         title={"Персональные"}

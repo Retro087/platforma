@@ -1,72 +1,71 @@
-.content{
-    position: relative;
-    padding: 25px;
-    box-sizing: border-box;
-    height: 800px;
-    overflow-y: scroll;
-   
+.content {
+  position: relative;
+  padding: 25px;
+  box-sizing: border-box;
+  height: 800px;
+  overflow-y: scroll;
 }
 
-.wrap{
-
-    box-sizing: border-box;
-    border-radius: 10px;
-    flex: 1;
-
+.wrap {
+  box-sizing: border-box;
+  border-radius: 10px;
+  flex: 1;
+  border-radius: 0 10px 10px 0;
+  border-left: none;
 }
 
-.input{
-    all: unset;
-    background-color: #0F0F0F;
-    padding: 23px 8px;
-    width: 613px;
-    box-sizing: border-box;
-    border: 1px solid #696868;
-    border-radius: 10px;
-    height: 35px;
-    color:#D7D5D5;
-    font-weight: 400;
-    font-size: 20px;
-    line-height: 100%;
-    letter-spacing: 0%;
-    height: 58px;
+.input {
+  all: unset;
+  background-color: #0f0f0f;
+  padding: 23px 8px;
+  width: 613px;
+  box-sizing: border-box;
+  border: 1px solid #696868;
+  border-radius: 10px;
+  height: 35px;
+  color: #d7d5d5;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  height: 58px;
 }
 
-.wrap_empty{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex: 1;
-    height: 800px;
+.wrap_empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  height: 800px;
 
-    border: 1px solid #dbdbdb;
-    box-sizing: border-box;
-    border-radius: 10px;
+  border: 1px solid #dbdbdb;
+  border-left: none;
+  box-sizing: border-box;
+  border-radius: 0 10px 10px 0;
 }
 
-.empty{
-    padding: 7px;
-    border-radius: 10px;
-    
-    background-color: #dbdbdb;
+.empty {
+  padding: 7px;
+  border-radius: 10px;
+
+  background-color: #dbdbdb;
 }
 
-.input_group{
-    gap: 20px;
-    padding: 15px;
-    box-sizing: border-box;
-    display: flex;
-    border-top: 1px solid #dbdbdb ;
-    border-radius: 0 0 10px 10px;
+.input_group {
+  gap: 20px;
+  padding: 15px;
+  box-sizing: border-box;
+  display: flex;
+  border-top: 1px solid #dbdbdb;
+  border-radius: 0 0 10px 10px;
 }
 
-.btn{
-    width: 58px;
-    height: 58px;
-    font-size: 12px;
-    background-color: #0F0F0F;
-    box-sizing: border-box;
-    border-radius: 10px;
-    border: 1px solid #696868;
-
+.btn {
+  width: 58px;
+  height: 58px;
+  font-size: 12px;
+  background-color: #0f0f0f;
+  box-sizing: border-box;
+  border-radius: 10px;
+  border: 1px solid #696868;
 }
