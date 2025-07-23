@@ -11,47 +11,88 @@ const Expenses = (props) => {
     { title: "Домен", monthAvg: 0, name: "domen" },
   ]);
 
-  function addExpense() {
-    props.addExpense();
-  }
+  const addExpense = () => {
+    const newExpense = {
+      title: "",
+      monthAvg: 0,
+      name: `expense_${Date.now()}`,
+    };
+    setExpenses([...expenses, newExpense]);
+  };
+
+  const updateExpense = (index, field, value) => {
+    const updatedExpenses = [...expenses];
+    if (field === "monthAvg") {
+      value = parseInt(value) || 0;
+    }
+    updatedExpenses[index] = { ...updatedExpenses[index], [field]: value };
+    setExpenses(updatedExpenses);
+  };
+
+  // Функция для удаления пустых расходов
+  const cleanExpenses = () => {
+    const filteredExpenses = expenses.filter(
+      (el) =>
+        el.title.trim() !== "" &&
+        el.monthAvg !== null &&
+        el.monthAvg !== undefined
+    );
+    setExpenses(filteredExpenses);
+  };
 
   return (
     <div>
-      {expenses.map((i) => {
-        return (
-          <div style={{ display: "flex", gap: 35 }}>
-            <Input
-              name={i.name}
-              onChange={(e) => setExpenses()}
-              label={"Название расхода"}
-              value={i.title}
-            />{" "}
-            <Input
-              onChange={(e) =>
-                setExpenses(
-                  ...expenses.map((el) => {
-                    if (i.title === el.title) {
-                      return { ...el, monthAvg: e.target.value };
-                    }
-                    return el;
-                  })
-                )
-              }
-              value={i.monthAvg}
-              label={"Средняя стоимость/месяц"}
-            />
-          </div>
-        );
-      })}
+      <BlockTitle title="Расходы" />
+
+      {expenses.map((expense, index) => (
+        <div
+          key={expense.name}
+          style={{
+            display: "flex",
+            gap: "20px",
+            marginBottom: "15px",
+            alignItems: "center",
+          }}
+        >
+          <Input
+            name={`title_${index}`}
+            label="Название расхода"
+            value={expense.title}
+            onChange={(e) => updateExpense(index, "title", e.target.value)}
+            style={{ flex: 1 }}
+          />
+
+          <Input
+            name={`monthAvg_${index}`}
+            label="Средняя стоимость/месяц"
+            type="number"
+            value={expense.monthAvg}
+            onChange={(e) => updateExpense(index, "monthAvg", e.target.value)}
+            style={{ width: "200px" }}
+          />
+        </div>
+      ))}
+
       <AddItem onClick={addExpense} />
-      <div style={{ display: "flex", justifyContent: "space-between" }}>
-        <Button onClick={() => props.backStep()} value={"Назад"} />
+
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          marginTop: "30px",
+        }}
+      >
+        <Button onClick={() => props.backStep()} value="Назад" />
         <Button
           onClick={() => {
+            // Перед удалением проверим и очистим пустые элементы
+            cleanExpenses();
+            // Потом перейдем к следующему этапу
             props.nextStep();
+            // Если нужно, можно передавать expenses родителю
+            // props.setExpenses(expenses);
           }}
-          marginb="50px"
-          value={"Вперед"}
+          value="Вперед"
         />
       </div>
     </div>

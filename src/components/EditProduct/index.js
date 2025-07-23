@@ -10,6 +10,8 @@ import Financial from "./financial";
 import MonetizationType from "./monetization-type";
 import Expenses from "./financial/expenses";
 import Subscriptions from "./subscriptions";
+import SocialMedia from "./social-media";
+import AssetsForSale from "./assets-for-sale";
 
 const EditProductContainer = () => {
   const dispatch = useDispatch();
@@ -58,7 +60,9 @@ const EditProductContainer = () => {
       case 4:
         return <Expenses {...callbacks} />;
       case 5:
-        return <Subscriptions />;
+        return <SocialMedia {...callbacks} />;
+      case 6:
+        return <AssetsForSale />;
       default:
         break;
     }

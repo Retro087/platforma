@@ -12,33 +12,57 @@ const Financial = (props) => {
   const dispatch = useDispatch();
   const params = useParams();
   const navigate = useNavigate();
-  const [isMonthly, setIsMonthly] = useState(true);
+
+  const [isMonthly, setIsMonthly] = useState(false);
   const [data, setData] = useState({
     gross_revenue_last_12_months: 0,
-    mrr: 0,
-    last_3_month: 0,
-    profit: "",
+    expenses_last_12_months: 0,
+    profit: 0,
+    avg_monthly_revenue: 0,
+    monthly_expenses: 0,
+    rentability: 0,
     views: "",
     subs: "",
     currency: "",
   });
   const [currency, setCurrency] = useState(["usd", "руб", "eur"]);
 
+  // Обновляем данные, если есть статья
   useEffect(() => {
     if (props.article.id) {
       setData({
         ...data,
-        margin: props.article.margin,
-        profit: props.article.profit,
-        views: props.article.views,
-        subs: props.article.subs,
         gross_revenue_last_12_months:
           props.article.gross_revenue_last_12_months,
-        mrr: props.article.mrr,
-        last_3_month: props.article.last_3_month,
+        expenses_last_12_months: props.article.expenses_last_12_months,
+        profit: props.article.profit,
+        avg_monthly_revenue: props.article.avg_monthly_revenue,
+        monthly_expenses: props.article.monthly_expenses,
+        rentability: props.article.rentability,
+        views: props.article.views,
+        subs: props.article.subs,
+        currency: props.article.currency,
       });
     }
   }, [props.article]);
+
+  // Расчетные показатели при изменении входных данных
+  useEffect(() => {
+    const gross = parseFloat(data.gross_revenue_last_12_months) || 0;
+    const expenses = parseFloat(data.expenses_last_12_months) || 0;
+    const profit = Math.round(gross - expenses);
+    const avgMonthlyRevenue = Math.round(gross / 12);
+    const monthlyExpenses = Math.round(expenses / 12);
+    const rentability = gross ? Math.round((profit / gross) * 100) : 0; // целое число
+
+    setData((prev) => ({
+      ...prev,
+      profit: profit,
+      avg_monthly_revenue: avgMonthlyRevenue,
+      monthly_expenses: monthlyExpenses,
+      rentability: rentability,
+    }));
+  }, [data.gross_revenue_last_12_months, data.expenses_last_12_months]);
 
   return (
     <div>
@@ -66,12 +90,15 @@ const Financial = (props) => {
       <Select
         mb={25}
         name={"currency"}
+        value={data.currency}
         onChange={(e) => setData({ ...data, [e.target.name]: e.target.value })}
         label={"Валюта"}
       >
-        {currency.map((i) => {
-          return <option>{i}</option>;
-        })}
+        {currency.map((i) => (
+          <option key={i} value={i}>
+            {i}
+          </option>
+        ))}
       </Select>
 
       {isMonthly ? (
@@ -81,38 +108,101 @@ const Financial = (props) => {
           <Input
             name={"gross_revenue_last_12_months"}
             onChange={(e) =>
-              setData({ ...data, [e.target.name]: e.target.value })
+              setData({
+                ...data,
+                [e.target.name]: parseInt(e.target.value) || 0,
+              })
             }
             value={data.gross_revenue_last_12_months}
             label={"Годовой доход за последние 12 месяцев"}
-            onBlur={(e) => {
-              if (e.target.value) {
+            type="number"
+            onBlur={() => {
+              if (data.gross_revenue_last_12_months) {
                 props.updateProduct(data, "draft");
               }
             }}
           />
           <Input
-            name={"mrr"}
+            name={"expenses_last_12_months"}
             onChange={(e) =>
-              setData({ ...data, [e.target.name]: e.target.value })
+              setData({
+                ...data,
+                [e.target.name]: parseInt(e.target.value) || 0,
+              })
             }
-            value={data.mrr}
-            label={"Средняя ежемесячная выручка"}
-            onBlur={(e) => {
-              if (e.target.value) {
+            value={data.expenses_last_12_months}
+            label={"Общие расходы за последние 12 месяцев"}
+            type="number"
+            onBlur={() => {
+              if (data.expenses_last_12_months) {
                 props.updateProduct(data, "draft");
               }
             }}
           />
           <Input
-            name={"last_3_month"}
+            name={"profit"}
             onChange={(e) =>
-              setData({ ...data, [e.target.name]: e.target.value })
+              setData({
+                ...data,
+                [e.target.name]: parseInt(e.target.value) || 0,
+              })
             }
-            value={data.last_3_month}
-            label={"Выручка за последние три месяца"}
-            onBlur={(e) => {
-              if (e.target.value) {
+            value={data.profit}
+            label={"Чистая прибыль"}
+            type="number"
+            onBlur={() => {
+              if (data.profit !== null) {
+                props.updateProduct(data, "draft");
+              }
+            }}
+          />
+          <Input
+            name={"avg_monthly_revenue"}
+            onChange={(e) =>
+              setData({
+                ...data,
+                [e.target.name]: parseInt(e.target.value) || 0,
+              })
+            }
+            value={data.avg_monthly_revenue}
+            label={"Среднемесячный доход"}
+            type="number"
+            onBlur={() => {
+              if (data.avg_monthly_revenue !== null) {
+                props.updateProduct(data, "draft");
+              }
+            }}
+          />
+          <Input
+            name={"monthly_expenses"}
+            onChange={(e) =>
+              setData({
+                ...data,
+                [e.target.name]: parseInt(e.target.value) || 0,
+              })
+            }
+            value={data.monthly_expenses}
+            label={"Среднемесячные расходы"}
+            type="number"
+            onBlur={() => {
+              if (data.monthly_expenses !== null) {
+                props.updateProduct(data, "draft");
+              }
+            }}
+          />
+          <Input
+            name={"rentability"}
+            onChange={(e) =>
+              setData({
+                ...data,
+                [e.target.name]: parseInt(e.target.value) || 0,
+              })
+            }
+            value={data.rentability}
+            label={"Рентабельность"}
+            type="number"
+            onBlur={() => {
+              if (data.rentability !== null) {
                 props.updateProduct(data, "draft");
               }
             }}
@@ -120,11 +210,18 @@ const Financial = (props) => {
         </>
       )}
 
-      <div style={{ display: "flex", justifyContent: "space-between" }}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          marginTop: 30,
+        }}
+      >
         <Button onClick={() => props.backStep()} value={"Назад"} />
         <Button
           onClick={() => {
-            props.updateProduct(data);
+            // Передача данных при переходе
+            props.updateProduct({ ...data });
             props.nextStep();
           }}
           value={"Далее"}

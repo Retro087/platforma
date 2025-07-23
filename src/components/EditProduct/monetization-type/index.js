@@ -28,7 +28,10 @@ const MonetizationType = (props) => {
       newSelectedTypes = [...selectedTypes, value];
     }
 
-    setSelectedTypes(newSelectedTypes); //  Обновляем состояние
+    setSelectedTypes(newSelectedTypes);
+    props.updateProduct({
+      monetization_model: newSelectedTypes,
+    }); //  Обновляем состояние
   };
 
   useEffect(() => {
