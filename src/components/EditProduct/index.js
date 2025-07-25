@@ -58,7 +58,7 @@ const EditProductContainer = () => {
       case 3:
         return <MonetizationType {...callbacks} article={select.article} />;
       case 4:
-        return <Expenses {...callbacks} />;
+        return <Expenses id={params.id} {...callbacks} />;
       case 5:
         return <SocialMedia {...callbacks} />;
       case 6:

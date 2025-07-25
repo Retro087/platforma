@@ -51,11 +51,26 @@ export const addView = createAsyncThunk("articles/addView", async (id) => {
   return services.articlesAPI.addView(id);
 });
 
+export const saveExpenses = createAsyncThunk(
+  "articles/addExpenses",
+  async ({ id, expenses }) => {
+    return services.articlesAPI.saveExpenses(expenses, id);
+  }
+);
+
+export const getExpenses = createAsyncThunk(
+  "articles/getExpenses",
+  async (id) => {
+    return services.articlesAPI.getExpenses(id);
+  }
+);
+
 export const articlesSlice = createSlice({
   name: "articles",
   initialState: {
     list: [],
     drafts: [],
+    expenses: [],
     totalProducts: null,
     step: 1,
     currentPage: 1,
@@ -146,7 +161,10 @@ export const articlesSlice = createSlice({
 
       state.load = false;
     });
-    builder.addCase(addView.fulfilled, (state, action) => {});
+    builder.addCase(getExpenses.fulfilled, (state, action) => {
+      debugger;
+      state.expenses = action.payload;
+    });
   },
 });
 

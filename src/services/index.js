@@ -281,6 +281,15 @@ services.articlesAPI = {
   addView(id) {
     return instance.post(`products/${id}/view`).then((res) => res.data);
   },
+  saveExpenses(expenses, id) {
+    debugger;
+    return instance
+      .post(`expenses/${id}`, { expenses })
+      .then((res) => res.data);
+  },
+  getExpenses(id) {
+    return instance.get(`expenses/${id}`).then((res) => res.data);
+  },
 };
 
 services.favoriteAPI = {

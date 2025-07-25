@@ -1,15 +1,29 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import HeaderContainer from "../../../Layouts/header-container";
 import BlockTitle from "../../../common/block-title";
 import Input from "../../../common/input";
 import AddItem from "../../../common/add-item";
 import Button from "../../../common/Button";
+import { useDispatch, useSelector } from "react-redux";
+import { getExpenses, saveExpenses } from "../../../../store/articlesSlice";
 
 const Expenses = (props) => {
+  const dispatch = useDispatch();
+  const expensesAll = useSelector((state) => state.articles.expenses);
   const [expenses, setExpenses] = useState([
     { title: "Реклама", monthAvg: 0, name: "reclama" },
     { title: "Домен", monthAvg: 0, name: "domen" },
   ]);
+
+  useEffect(() => {
+    dispatch(getExpenses(props.id));
+  }, [props.id]);
+
+  useEffect(() => {
+    if (expensesAll.length) {
+      setExpenses(expensesAll);
+    }
+  }, [expensesAll]);
 
   const addExpense = () => {
     const newExpense = {
@@ -29,14 +43,14 @@ const Expenses = (props) => {
     setExpenses(updatedExpenses);
   };
 
-  // Функция для удаления пустых расходов
-  const cleanExpenses = () => {
+  const saveExpense = () => {
     const filteredExpenses = expenses.filter(
       (el) =>
         el.title.trim() !== "" &&
         el.monthAvg !== null &&
         el.monthAvg !== undefined
     );
+    dispatch(saveExpenses({ expenses: filteredExpenses, id: props.id }));
     setExpenses(filteredExpenses);
   };
 
@@ -86,7 +100,7 @@ const Expenses = (props) => {
         <Button
           onClick={() => {
             // Перед удалением проверим и очистим пустые элементы
-            cleanExpenses();
+            saveExpense();
             // Потом перейдем к следующему этапу
             props.nextStep();
             // Если нужно, можно передавать expenses родителю
