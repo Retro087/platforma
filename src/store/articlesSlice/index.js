@@ -51,10 +51,22 @@ export const addView = createAsyncThunk("articles/addView", async (id) => {
   return services.articlesAPI.addView(id);
 });
 
-export const saveExpenses = createAsyncThunk(
-  "articles/addExpenses",
-  async ({ id, expenses }) => {
-    return services.articlesAPI.saveExpenses(expenses, id);
+export const updateExpense = createAsyncThunk(
+  "articles/updateExpense",
+  async (expense) => {
+    return services.articlesAPI.updateExpense(expense);
+  }
+);
+export const addExpense = createAsyncThunk(
+  "articles/addExpense",
+  async ({ id, expense }) => {
+    return services.articlesAPI.addExpense(expense, id);
+  }
+);
+export const deleteExpense = createAsyncThunk(
+  "articles/deleteExpense",
+  async (id) => {
+    return services.articlesAPI.deleteExpense(id);
   }
 );
 
@@ -164,6 +176,23 @@ export const articlesSlice = createSlice({
     builder.addCase(getExpenses.fulfilled, (state, action) => {
       debugger;
       state.expenses = action.payload;
+    });
+    builder.addCase(addExpense.fulfilled, (state, action) => {
+      debugger;
+      state.expenses = [...state.expenses, action.payload.expense];
+    });
+    builder.addCase(updateExpense.fulfilled, (state, action) => {
+      state.expenses = state.expenses.map((i) => {
+        if (i.id === action.payload.expense.id) {
+          return action.payload.expense;
+        }
+        return i;
+      });
+    });
+    builder.addCase(deleteExpense.fulfilled, (state, action) => {
+      state.expenses = state.expenses.filter(
+        (i) => Number(i.id) !== Number(action.payload.id)
+      );
     });
   },
 });

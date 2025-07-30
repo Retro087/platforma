@@ -5,89 +5,92 @@ import Input from "../../../common/input";
 import AddItem from "../../../common/add-item";
 import Button from "../../../common/Button";
 import { useDispatch, useSelector } from "react-redux";
-import { getExpenses, saveExpenses } from "../../../../store/articlesSlice";
+import {
+  addExpense,
+  deleteExpense,
+  getExpenses,
+  saveExpenses,
+  updateExpense,
+} from "../../../../store/articlesSlice";
 
 const Expenses = (props) => {
   const dispatch = useDispatch();
   const expensesAll = useSelector((state) => state.articles.expenses);
-  const [expenses, setExpenses] = useState([
-    { title: "Реклама", monthAvg: 0, name: "reclama" },
-    { title: "Домен", monthAvg: 0, name: "domen" },
-  ]);
+  const [expenses, setExpenses] = useState([]);
 
   useEffect(() => {
     dispatch(getExpenses(props.id));
   }, [props.id]);
 
   useEffect(() => {
-    if (expensesAll.length) {
-      setExpenses(expensesAll);
-    }
+    setExpenses(expensesAll);
   }, [expensesAll]);
 
-  const addExpense = () => {
+  const addExp = () => {
     const newExpense = {
       title: "",
-      monthAvg: 0,
+      amount: 0,
       name: `expense_${Date.now()}`,
     };
-    setExpenses([...expenses, newExpense]);
+    dispatch(addExpense({ id: props.id, expense: newExpense }));
   };
 
-  const updateExpense = (index, field, value) => {
+  const updateExpenselocal = (index, field, value) => {
     const updatedExpenses = [...expenses];
-    if (field === "monthAvg") {
+    if (field === "amount") {
       value = parseInt(value) || 0;
     }
     updatedExpenses[index] = { ...updatedExpenses[index], [field]: value };
     setExpenses(updatedExpenses);
   };
-
-  const saveExpense = () => {
-    const filteredExpenses = expenses.filter(
-      (el) =>
-        el.title.trim() !== "" &&
-        el.monthAvg !== null &&
-        el.monthAvg !== undefined
-    );
-    dispatch(saveExpenses({ expenses: filteredExpenses, id: props.id }));
-    setExpenses(filteredExpenses);
-  };
-
+  debugger;
   return (
     <div>
       <BlockTitle title="Расходы" />
 
-      {expenses.map((expense, index) => (
-        <div
-          key={expense.name}
-          style={{
-            display: "flex",
-            gap: "20px",
-            marginBottom: "15px",
-            alignItems: "center",
-          }}
-        >
-          <Input
-            name={`title_${index}`}
-            label="Название расхода"
-            value={expense.title}
-            onChange={(e) => updateExpense(index, "title", e.target.value)}
-            style={{ flex: 1 }}
-          />
+      {expenses.length ? (
+        expenses.map((expense, index) => (
+          <div
+            key={expense.name}
+            style={{
+              display: "flex",
+              gap: "20px",
+              marginBottom: "15px",
+              alignItems: "center",
+            }}
+          >
+            <Input
+              name={`title_${index}`}
+              label="Название расхода"
+              value={expense.title}
+              onBlur={() => dispatch(updateExpense(expense))}
+              onChange={(e) =>
+                updateExpenselocal(index, "title", e.target.value)
+              }
+              style={{ flex: 1 }}
+            />
 
-          <Input
-            name={`monthAvg_${index}`}
-            label="Средняя стоимость/месяц"
-            type="number"
-            value={expense.monthAvg}
-            onChange={(e) => updateExpense(index, "monthAvg", e.target.value)}
-            style={{ width: "200px" }}
-          />
-        </div>
-      ))}
+            <Input
+              name={`amount_${index}`}
+              label="Средняя стоимость/месяц"
+              type="number"
+              value={expense.amount}
+              onBlur={() => dispatch(updateExpense(expense))}
+              onChange={(e) =>
+                updateExpenselocal(index, "amount", e.target.value)
+              }
+              style={{ width: "200px" }}
+            />
+            <button onClick={() => dispatch(deleteExpense(expense.id))}>
+              Удалить
+            </button>
+          </div>
+        ))
+      ) : (
+        <div style={{ color: "#FFF" }}>Добавьте расходы</div>
+      )}
 
-      <AddItem onClick={addExpense} />
+      <AddItem onClick={addExp} />
 
       <div
         style={{
@@ -100,7 +103,7 @@ const Expenses = (props) => {
         <Button
           onClick={() => {
             // Перед удалением проверим и очистим пустые элементы
-            saveExpense();
+
             // Потом перейдем к следующему этапу
             props.nextStep();
             // Если нужно, можно передавать expenses родителю

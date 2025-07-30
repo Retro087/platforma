@@ -287,8 +287,18 @@ services.articlesAPI = {
       .post(`expenses/${id}`, { expenses })
       .then((res) => res.data);
   },
+  addExpense(expense, id) {
+    debugger;
+    return instance.post(`expenses/${id}`, { expense }).then((res) => res.data);
+  },
   getExpenses(id) {
     return instance.get(`expenses/${id}`).then((res) => res.data);
+  },
+  updateExpense(expense) {
+    return instance.put(`expenses/`, { expense }).then((res) => res.data);
+  },
+  deleteExpense(id) {
+    return instance.delete(`expenses/${id}`).then((res) => res.data);
   },
 };
 
