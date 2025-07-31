@@ -174,11 +174,9 @@ export const articlesSlice = createSlice({
       state.load = false;
     });
     builder.addCase(getExpenses.fulfilled, (state, action) => {
-      debugger;
       state.expenses = action.payload;
     });
     builder.addCase(addExpense.fulfilled, (state, action) => {
-      debugger;
       state.expenses = [...state.expenses, action.payload.expense];
     });
     builder.addCase(updateExpense.fulfilled, (state, action) => {

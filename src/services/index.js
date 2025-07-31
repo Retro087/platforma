@@ -300,6 +300,25 @@ services.articlesAPI = {
   deleteExpense(id) {
     return instance.delete(`expenses/${id}`).then((res) => res.data);
   },
+  updateStatus(id, status) {
+    return instance.patch(`products/${id}`, { status }).then((res) => res.data);
+  },
+};
+
+services.socialAPI = {
+  addSocial(social, id) {
+    debugger;
+    return instance.post(`social/${id}`, { social }).then((res) => res.data);
+  },
+  getSocials(id) {
+    return instance.get(`social/${id}`).then((res) => res.data);
+  },
+  updateSocial(social) {
+    return instance.put(`social/`, { social }).then((res) => res.data);
+  },
+  deleteSocial(id) {
+    return instance.delete(`social/${id}`).then((res) => res.data);
+  },
 };
 
 services.favoriteAPI = {
